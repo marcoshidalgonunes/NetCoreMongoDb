@@ -10,7 +10,7 @@ namespace Catalog.Tests
     {
         private readonly ServiceProvider _serviceProvider;
 
-        protected ICatalogDatabaseSettings Settings
+        private ICatalogDatabaseSettings Settings
         {
             get {  return _serviceProvider.GetService<ICatalogDatabaseSettings>(); }
         }
