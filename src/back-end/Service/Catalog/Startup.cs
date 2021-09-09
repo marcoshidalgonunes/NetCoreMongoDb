@@ -1,3 +1,4 @@
+using System;
 using Catalog.Core;
 using Catalog.Models;
 using Catalog.Services;
@@ -23,6 +24,15 @@ namespace Catalog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost");
+                    });
+            });
+
             // requires using Microsoft.Extensions.Options
             services.Configure<CatalogDatabaseSettings>(
                 Configuration.GetSection(nameof(CatalogDatabaseSettings)));
@@ -52,6 +62,8 @@ namespace Catalog
             }
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
