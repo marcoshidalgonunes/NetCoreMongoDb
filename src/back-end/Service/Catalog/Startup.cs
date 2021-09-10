@@ -34,8 +34,16 @@ namespace Catalog
             });
 
             // requires using Microsoft.Extensions.Options
-            services.Configure<CatalogDatabaseSettings>(
-                Configuration.GetSection(nameof(CatalogDatabaseSettings)));
+            if (bool.TryParse(Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"), out bool isInContainer) && isInContainer)
+            {
+                services.Configure<CatalogDatabaseSettings>(
+                    Configuration.GetSection(nameof(CatalogDatabaseSettings) + "Docker"));
+            }
+            else
+            {
+                services.Configure<CatalogDatabaseSettings>(
+                    Configuration.GetSection(nameof(CatalogDatabaseSettings)));
+            }
 
             services.AddSingleton<ICatalogDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<CatalogDatabaseSettings>>().Value);

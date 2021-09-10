@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    volumes:
+      - ./data:/data/db
+    ports:
+      - 27018:27017
+
+  catalog:
+    image: ${DOCKER_REGISTRY-}catalog
+    build:
+      context: .
+      dockerfile: Catalog/Dockerfile
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    environment:
+      - ASPNETCORE_ENVIRONMENT=DockerDevelopment
