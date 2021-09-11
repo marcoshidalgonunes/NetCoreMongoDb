@@ -74,6 +74,56 @@ namespace Catalog.Tests
         }
 
         [Theory]
+        [InlineData("Category", "Computers")]
+        public async Task GetByCriteria(string criteria, string search)
+        {
+            // Arrange
+            repositoryMock
+                .Setup(o => o.ReadByCriteriaAsync(criteria, search))
+                .ReturnsAsync(new List<Book> {
+                    new Book {
+                        Id = "613260743633c438d5250513",
+                        Author = "Ralph Johnson",
+                        BookName = "Design Patterns",
+                        Category = "Computers",
+                        Price = 54.90M
+                    },
+                    new Book {
+                        Id = "613260743633c438d5250514",
+                        Author = "Robert C. Martin",
+                        BookName = "Clean Code",
+                        Category = "Computers",
+                        Price = 43.15M
+                    }
+                });
+            var service = new BookService(repositoryMock.Object);
+
+            // Act
+            var items = await service.GetByCriteriaAsync(criteria, search);
+
+            // Assert
+            Assert.True(items.Count > 0);
+        }
+
+        [Theory]
+        [InlineData("Category", "Games")]
+        [InlineData("Style", "Computers")]
+        public async Task GetByCriteriaNotFound(string criteria, string search)
+        {
+            // Arrange
+            repositoryMock
+                .Setup(o => o.ReadByCriteriaAsync(criteria, search))
+                .ReturnsAsync(value: null);
+            var service = new BookService(repositoryMock.Object);
+
+            // Act
+            var items = await service.GetByCriteriaAsync(criteria, search);
+
+            // Assert
+            Assert.Null(items);
+        }
+
+        [Theory]
         [InlineData("613260743633c438d5250513")]
         public async Task GetById(string id)
         {

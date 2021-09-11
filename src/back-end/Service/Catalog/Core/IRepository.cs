@@ -11,6 +11,8 @@ namespace Catalog.Core
 
         Task<List<T>> ReadAllAsync();
 
+        Task<List<T>> ReadByCriteriaAsync(string criteria, string search);
+
         Task<T> ReadByIdAsync(string id);
 
         Task UpdateAsync(string id, T itemIn);

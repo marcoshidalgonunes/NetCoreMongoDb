@@ -54,6 +54,35 @@ namespace Catalog.Tests
         }
 
         [Theory]
+        [InlineData("Category", "Computers")]
+        public async Task ReadByCriteria(string criteria, string search)
+        {
+            // Arrange
+            var bookRepository = new BookRepository(Settings);
+
+            // Act
+            var items = await bookRepository.ReadByCriteriaAsync(criteria, search);
+
+            // Assert
+            Assert.True(items.Count > 0);
+        }
+
+        [Theory]
+        [InlineData("Category", "Games")]
+        [InlineData("Style", "Computers")]
+        public async Task ReadByCriteriaNotFound(string criteria, string search)
+        {
+            // Arrange
+            var bookRepository = new BookRepository(Settings);
+
+            // Act
+            var items = await bookRepository.ReadByCriteriaAsync(criteria, search);
+
+            // Assert
+            Assert.False(items.Count > 0);
+        }
+
+        [Theory]
         [InlineData("613260743633c438d5250513")]
         public async Task ReadById(string id)
         {

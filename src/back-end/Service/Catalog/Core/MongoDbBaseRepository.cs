@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Catalog.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Catalog.Core
@@ -29,6 +31,17 @@ namespace Catalog.Core
         public async Task<List<T>> ReadAllAsync()
         {
             var items = await _collection.FindAsync(item => true);
+
+            return items.ToList();
+        }
+
+        public async Task<List<T>> ReadByCriteriaAsync(string criteria, string search)
+        {
+            var queryExpr = new BsonRegularExpression(new Regex(search, RegexOptions.IgnoreCase));
+            var builder = Builders<T>.Filter;
+            var filter = builder.Regex(criteria, queryExpr);
+
+            var items = await _collection.FindAsync<T>(filter);
 
             return items.ToList();
         }

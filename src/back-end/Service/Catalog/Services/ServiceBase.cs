@@ -29,6 +29,11 @@ namespace Catalog.Services
             return await _repository.ReadAllAsync();
         }
 
+        public async Task<List<T>> GetByCriteriaAsync(string criteria, string search)
+        {
+            return await _repository.ReadByCriteriaAsync(criteria, search);
+        }
+
         public async Task<T> GetByIdAsync(string id)
         {
             return await _repository.ReadByIdAsync(id);

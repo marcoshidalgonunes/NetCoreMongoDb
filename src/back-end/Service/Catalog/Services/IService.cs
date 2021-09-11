@@ -13,6 +13,8 @@ namespace Catalog.Services
 
         Task<List<T>> GetAllAsync();
 
+        Task<List<T>> GetByCriteriaAsync(string criteria, string search);
+
         Task<T> GetByIdAsync(string id);
 
         Task UpdateAsync(string id, T itemIn);

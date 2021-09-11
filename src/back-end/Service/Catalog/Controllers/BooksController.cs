@@ -34,6 +34,19 @@ namespace Catalog.Controllers
             return book;
         }
 
+        [HttpGet("{criteria},{search}")]
+        public async Task<ActionResult<List<Book>>> Get(string criteria, string search)
+        {
+            var books = await _bookService.GetByCriteriaAsync(criteria, search);
+
+            if (books == null || books.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return books;
+        }
+
         [HttpPost]
         public async Task<ActionResult<Book>> Create(Book book)
         {

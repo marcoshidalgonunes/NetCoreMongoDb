@@ -123,6 +123,58 @@ namespace Catalog.Tests
         }
 
         [Theory]
+        [InlineData("Category", "Computers")]
+        public async Task Search(string criteria, string search)
+        {
+            // Arrange
+            serviceMock
+                .Setup(s => s.GetByCriteriaAsync(criteria, search))
+                .ReturnsAsync(new List<Book> {
+                    new Book {
+                        Id = "613260743633c438d5250513",
+                        Author = "Ralph Johnson",
+                        BookName = "Design Patterns",
+                        Category = "Computers",
+                        Price = 54.90M
+                    },
+                    new Book {
+                        Id = "613260743633c438d5250514",
+                        Author = "Robert C. Martin",
+                        BookName = "Clean Code",
+                        Category = "Computers",
+                        Price = 43.15M
+                    }
+                });
+            var controller = new BooksController(serviceMock.Object);
+
+            // Act
+            var result = await controller.Get(criteria, search);
+
+            // Assert
+            var returnValue = Assert.IsType<List<Book>>(result.Value);
+            Assert.True(returnValue.Count > 0);
+        }
+
+        [Theory]
+        [InlineData("Category", "Games")]
+        [InlineData("Style", "Computers")]
+        public async Task SearchNotFound(string criteria, string search)
+        {
+            // Arrange
+            serviceMock
+                .Setup(s => s.GetByCriteriaAsync(criteria, search))
+                .ReturnsAsync(value: null);
+            var service = new BooksController(serviceMock.Object);
+
+            // Act
+            var result = await service.Get(criteria, search);
+
+            // Assert
+            var returnValue = Assert.IsType<ActionResult<List<Book>>>(result);
+            Assert.IsType<NotFoundResult>(returnValue.Result);
+        }
+
+        [Theory]
         [InlineData("613260743633c438d5250513")]
         public async Task Update(string id)
         {
