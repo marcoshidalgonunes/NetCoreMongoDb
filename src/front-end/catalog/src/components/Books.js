@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export class Book extends Component {
+export class Books extends Component {
     constructor(catalog) {
         super();
         this.books = catalog.books.data;
@@ -18,7 +18,7 @@ export class Book extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.books.map(book =>
+                {this.books && this.books.map(book =>
                   <tr key={book.id}>
                     <td>{book.id}</td>
                     <td>{book.bookName}</td>
