@@ -74,6 +74,7 @@ namespace Catalog.Tests
         }
 
         [Theory]
+        [InlineData("Name", "Design Patterns")]
         [InlineData("Category", "Computers")]
         public async Task GetByCriteria(string criteria, string search)
         {

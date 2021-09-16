@@ -123,6 +123,7 @@ namespace Catalog.Tests
         }
 
         [Theory]
+        [InlineData("Name", "Design Patterns")]
         [InlineData("Category", "Computers")]
         public async Task Search(string criteria, string search)
         {

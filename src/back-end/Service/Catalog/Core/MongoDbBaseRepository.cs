@@ -41,7 +41,7 @@ namespace Catalog.Core
             var builder = Builders<T>.Filter;
             var filter = builder.Regex(criteria, queryExpr);
 
-            var items = await _collection.FindAsync<T>(filter);
+            var items = await _collection.Find(filter).ToListAsync();
 
             return items.ToList();
         }
