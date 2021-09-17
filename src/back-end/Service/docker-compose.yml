@@ -3,11 +3,11 @@ version: '3.4'
 services:
 
   mongo:
-    container_name: mongo
-    image: mongo
+    container_name: bookstoredb
+    image: bookstoredb
     restart: always
     volumes:
-      - ./data:/data/db
+      - mongodata:/data/db
     ports:
       - 27018:27017
 
@@ -22,3 +22,6 @@ services:
       - mongo
     environment:
       - ASPNETCORE_ENVIRONMENT=DockerDevelopment
+
+volumes:
+  mongodata:
