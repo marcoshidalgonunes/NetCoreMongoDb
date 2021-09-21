@@ -21,7 +21,7 @@ namespace Catalog.Controllers
         public async Task<ActionResult<List<Book>>> Get() =>
             await _bookService.GetAllAsync();
 
-        [HttpGet("{id:length(24)}")]
+        [HttpGet("{id:length(24)}", Name = "GetBook")]
         public async Task<ActionResult<Book>> Get(string id)
         {
             var book = await _bookService.GetByIdAsync(id);
@@ -52,7 +52,7 @@ namespace Catalog.Controllers
         {
             await _bookService.CreateAsync(book);
 
-            return CreatedAtRoute("GetBook", new { id = book.Id.ToString() }, book);
+            return CreatedAtRoute("GetBook", new { id = book.Id }, book);
         }
 
         [HttpPut("{id:length(24)}")]
