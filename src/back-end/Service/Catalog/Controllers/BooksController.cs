@@ -21,7 +21,7 @@ namespace Catalog.Controllers
         public async Task<ActionResult<List<Book>>> Get() =>
             await _bookService.GetAllAsync();
 
-        [HttpGet("{id:length(24)}", Name = "GetBook")]
+        [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<Book>> Get(string id)
         {
             var book = await _bookService.GetByIdAsync(id);

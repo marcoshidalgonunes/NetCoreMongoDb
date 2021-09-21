@@ -27,14 +27,19 @@ namespace Catalog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
+            if (_env.IsDevelopment())
             {
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-                        builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost");
-                    });
-            });
+                services.AddCors(options =>
+                {
+                    options.AddDefaultPolicy(
+                        builder =>
+                        {
+                            builder.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback);
+                            builder.AllowAnyHeader();
+                            builder.AllowAnyMethod();
+                        });
+                });
+            }
 
             // requires using Microsoft.Extensions.Options
             if (bool.TryParse(Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"), out bool isInContainer) && isInContainer)

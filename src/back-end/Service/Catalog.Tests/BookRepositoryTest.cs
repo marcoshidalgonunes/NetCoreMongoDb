@@ -26,9 +26,9 @@ namespace Catalog.Tests
             // Arrange
             Book book = new Book
             {
-                Author = "Effective Programming: More Than Writing Code",
-                BookName = "Jeff Atwood",
-                Category = "Computers",
+                Author = "Jeff Atwood",
+                BookName = "Effective Programming: More Than Writing Code",
+                Category = "Programming",
                 Price = 61.90M
             };
             var bookRepository = new BookRepository(Settings);
