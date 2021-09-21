@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
-import { List } from './components/List';
+import { Route, Switch } from "react-router-dom";
 import { BooksList } from './components/BooksList';
+import { BookCreate, BookUpdate, BookDelete } from './components/BookEdit';
 
 import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <List>
-        <BooksList />
-      </List>
+      <Switch>
+        <Route path="/createbook" component={BookCreate} />
+        <Route path="/updatebook/:id" component={BookUpdate} />
+        <Route path="/deletebook/:id" component={BookDelete} />
+        <Route path="/" component={BooksList} />
+      </Switch>
     );
   }
 }

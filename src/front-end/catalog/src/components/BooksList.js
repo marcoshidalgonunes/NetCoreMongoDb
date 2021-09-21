@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import Select from 'react-select';
+import { List } from './List';
 import { Books } from './Books';
 import ApiBook from '../services/apiBooks';
 
@@ -17,19 +19,15 @@ export class BooksList extends Component {
   }
 
   onCriteriaChange = (selectedOption) => {
-    const search = this.state.search;
-    this.setState({ catalog: [], loading: false, criteria: selectedOption.value, search: search });
+    this.setState({ criteria: selectedOption.value });
   }
 
   onSearchChange = (event) => {
-    const criteria = this.state.criteria;
-    this.setState({ catalog: [], loading: false, criteria: criteria, search: event.target.value });
+    this.setState({ search: event.target.value });
   }
 
   onSearchSubmit = () => {
-    const criteria = this.state.criteria;
-    const search = this.state.search;
-    this.setState({ catalog: [], loading: true, criteria: criteria, search: search });
+    this.setState({ loading: true });
   }
 
   componentDidMount() {
@@ -37,52 +35,54 @@ export class BooksList extends Component {
   }
 
   componentDidUpdate() {
-    if (this.state.loading) {
-      const criteria = this.state.criteria;
-      const search = this.state.search;
-      this.populateListByCriteria(criteria, search);
-    }
+    this.populateListByCriteria();
   }
 
   render() {
     let contents = this.state.loading
-      ? <p><em>Loading data...</em></p>
+      ? <div className='alert alert-light'>Loading data...</div>
       : this.state.error 
-         ? <p><em>An error happened with Catalog Service: <span style={{color: 'red'}}>{this.state.error}</span></em></p>
+         ? <div className='alert alert-danger mt-3'>An error happened with Catalog Service: <strong>{this.state.error}</strong></div>
          : <Books books={this.state.catalog} />;
 
     return (      
-      <span>
-        <div>
-          <h1 id="tabelLabel" >Book Catalog</h1>
-          <div className="row">
-            <div className="col col-md-3">
+      <List>
+        <h1 id="tabelLabel" >Book Catalog</h1>
+        <div className="row">
+          <div className="col col-md-8">
+            <div className="input-group">
               <Select 
+                className="w-25"
                 options={this.options}
                 autoFocus={true}
                 placeholder='Search by...'
                 onChange={this.onCriteriaChange}
               />
-            </div>
-            <div className="col col-md-5">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  onChange={this.onSearchChange}
-                />
-                <button
-                  className="btn btn-outline-secondary"
-                  type="button"
-                  onClick={this.onSearchSubmit}>
-                  Search
-                </button>
-              </div>
+              <input
+                type="text"
+                className="form-control"
+                onChange={this.onSearchChange}
+              />
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={this.onSearchSubmit}>
+                Search
+              </button>
             </div>
           </div>
-          {contents}
+          <div className="col col-md-2">
+           <Link to="/createbook">
+              <button
+                className="btn btn-primary"
+                type="button">
+                New Book
+              </button>
+            </Link>
+          </div>
         </div>
-      </span>        
+        {contents}
+      </List>
     );
   }
 
@@ -94,7 +94,10 @@ export class BooksList extends Component {
         this.setState( { error: err.message, loading: false });
     });
   }
-  async populateListByCriteria(criteria, search) {
+
+  async populateListByCriteria() {
+    const criteria = this.state.criteria;
+    const search = this.state.search;
     if (criteria && search) {
       await ApiBook.getByCriteria(criteria, search)
         .then(data => this.setState({ catalog: data, loading: false, criteria: criteria, search: search, error: null }))
