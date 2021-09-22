@@ -256,7 +256,6 @@ export class BookDelete extends BookEdit {
   }
 
   async deleteBook() {
-    const book = this.getBook();
     const id = this.state.id;
     await ApiBooks.delete(id)
       .then(() => this.setState({ redirect: '/'}))
