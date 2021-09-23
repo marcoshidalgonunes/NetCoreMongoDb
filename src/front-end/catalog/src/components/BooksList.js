@@ -27,15 +27,17 @@ export class BooksList extends Component {
   }
 
   onSearchSubmit = () => {
-    this.setState({ loading: true });
+    const criteria = this.state.criteria;
+    const search = this.state.search;
+    if (criteria && search) {
+      this.setState({ loading: true });
+      this.populateListByCriteria(criteria, search);
+    }
+    
   }
 
   componentDidMount() {
     this.populateList();
-  }
-
-  componentDidUpdate() {
-    this.populateListByCriteria();
   }
 
   render() {
@@ -95,20 +97,14 @@ export class BooksList extends Component {
     });
   }
 
-  async populateListByCriteria() {
-    if (this.state.loading) {
-      const criteria = this.state.criteria;
-      const search = this.state.search;
-      if (criteria && search) {
-        await ApiBook.getByCriteria(criteria, search)
-          .then(data => this.setState({ catalog: data, loading: false, criteria: criteria, search: search, error: null }))
-          .catch(err => { 
-            console.log(err);
-            const status = err.response.status;
-            const message = status === 404 ? `Not found books by ${criteria}` : err.message;
-            this.setState({ error: message, loading: false });
-        }); 
-      }
-    }
+  async populateListByCriteria(criteria, search) {
+    await ApiBook.getByCriteria(criteria, search)
+      .then(data => this.setState({ catalog: data, loading: false, criteria: criteria, search: search, error: null }))
+      .catch(err => { 
+        console.log(err);
+        const status = err.response.status;
+        const message = status === 404 ? `Not found books by ${criteria}` : err.message;
+        this.setState({ error: message, loading: false });
+    }); 
   }
 }
