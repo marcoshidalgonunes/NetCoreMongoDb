@@ -35,8 +35,6 @@ services:
       - '3001:3000'
     environment:
       - NODE_ENV=development
-    depends_on:
-      - catalog
     volumes:
       - '../../front-end/catalog/.:/app'
       - '/app/node_modules'
