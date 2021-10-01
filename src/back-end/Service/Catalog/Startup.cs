@@ -1,5 +1,6 @@
 using System;
 using Catalog.Core;
+using Catalog.Core.Middleware;
 using Catalog.Models;
 using Catalog.Services;
 using Microsoft.AspNetCore.Builder;
@@ -79,6 +80,8 @@ namespace Catalog
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NetCoreWebAPIMongoDB v1"));
             }
+
+            app.UseExceptionMiddleware();
 
             app.UseRouting();
 
