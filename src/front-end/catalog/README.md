@@ -1,6 +1,10 @@
-# Getting Started with Create React App
+# Catalog UI
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+It uses `react-router` for routing, [Axios](https://axios-http.com/) to interact with API and [Bootstrap](https://getbootstrap.com/) for styling.
+
+Along with procedures below, the project can be run in a [docker container[(https://mherman.org/blog/dockerizing-a-react-app/).
 
 ## Available Scripts
 
