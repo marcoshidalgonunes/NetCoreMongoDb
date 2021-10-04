@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace Catalog
 {
@@ -83,7 +84,10 @@ namespace Catalog
 
             app.UseExceptionMiddleware();
 
-            app.UseRouting();
+            // This will make the HTTP requests log as rich logs instead of plain text.
+            app.UseSerilogRequestLogging();
+
+            _ = app.UseRouting();
 
             app.UseCors();
 
