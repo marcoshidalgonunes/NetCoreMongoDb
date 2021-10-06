@@ -1,9 +1,14 @@
 import axios from "axios";
-import config from "../config.json"
 
-export default axios.create({
-  baseURL: config.UrlApi,
-  headers: {
-    "Content-type": "application/json"
+class Api {
+  constructor() {
+    this.apiClient = axios.create({
+      baseURL: '/api',
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
   }
-});
+}
+
+export default Api;

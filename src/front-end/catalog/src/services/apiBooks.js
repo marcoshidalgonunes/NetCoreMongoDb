@@ -1,28 +1,28 @@
-import api from './api';
+import Api from './api';
 
-class ApiBooks {
+class ApiBooks extends Api {
     async getAll() {
-        return await api.get('Books');
+        return await this.apiClient.get('Books');
     }
 
     async getByCriteria(criteria, search) {
-        return await api.get(`Books/${criteria},${search}`);
+        return await this.apiClient.get(`Books/${criteria},${search}`);
     }
 
     async getById(id) {
-        return await api.get(`Books/${id}`);
+        return await this.apiClient.get(`Books/${id}`);
     }
 
     async create(book) {
-        return await api.post('Books/', book);
+        return await this.apiClient.post('Books/', book);
     }
     
     async delete(id) {
-        return await api.delete(`Books/${id}`);
+        return await this.apiClient.delete(`Books/${id}`);
     }
     
     async update(book) {
-        return await api.put(`Books/${book.id}`, book);
+        return await this.apiClient.put(`Books/${book.id}`, book);
     }
 }
 
