@@ -9,7 +9,7 @@ namespace Catalog.Services
     {
         Task<T> CreateAsync(T item);
 
-        Task DeleteAsync(string item);
+        Task<bool> DeleteAsync(string item);
 
         Task<List<T>> GetAllAsync();
 
@@ -17,6 +17,6 @@ namespace Catalog.Services
 
         Task<T> GetByIdAsync(string id);
 
-        Task UpdateAsync(string id, T itemIn);
+        Task<bool> UpdateAsync(string id, T itemIn);
     }
 }

@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Catalog.Tests
 {
-    public sealed class BookRepositoryTest : IClassFixture<DependencyInjectionFixture>
+    public sealed class BookRepositoryTest : IClassFixture<Fixture.DependencyInjectionFixture>
     {
         private readonly ServiceProvider _serviceProvider;
 
@@ -15,7 +15,7 @@ namespace Catalog.Tests
             get {  return _serviceProvider.GetService<ICatalogDatabaseSettings>(); }
         }
 
-        public BookRepositoryTest(DependencyInjectionFixture fixture)
+        public BookRepositoryTest(Fixture.DependencyInjectionFixture fixture)
         {
             _serviceProvider = fixture.ServiceProvider;
         }

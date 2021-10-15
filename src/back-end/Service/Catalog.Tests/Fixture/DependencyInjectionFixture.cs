@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace Catalog.Tests
+namespace Catalog.Tests.Fixture
 {
     public sealed class DependencyInjectionFixture : IDisposable
     {

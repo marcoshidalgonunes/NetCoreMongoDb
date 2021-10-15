@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -9,12 +8,12 @@ using MongoDB.Driver;
 
 namespace Catalog.Core
 {
-    public abstract class MongoDbBaseRepository<T> : IRepository<T>
+    public abstract class BaseMongoDbRepository<T> : IRepository<T>
         where T : IEntity
     {
         private readonly IMongoCollection<T> _collection;
 
-        protected MongoDbBaseRepository(ICatalogDatabaseSettings settings, string collectionName)
+        protected BaseMongoDbRepository(ICatalogDatabaseSettings settings, string collectionName)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);

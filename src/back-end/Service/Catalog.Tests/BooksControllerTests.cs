@@ -189,9 +189,9 @@ namespace Catalog.Tests
                 Price = 54.90M
             };
 
-            serviceMock.Setup(s => s.GetByIdAsync(id))
-                .ReturnsAsync(book);
-            serviceMock.Setup(s => s.UpdateAsync(id, book));
+            serviceMock
+                .Setup(s => s.UpdateAsync(id, book))
+                .ReturnsAsync(true);
             var controller = new BooksController(serviceMock.Object);
 
             // Act
@@ -208,16 +208,17 @@ namespace Catalog.Tests
             // Arrange
             Book book = new()
             {
-                Id = id,
+                Id = "313260743633c438d5250529",
                 Author = "Ralph Johnson",
                 BookName = "Design Patterns",
                 Category = "Computers",
                 Price = 54.90M
             };
 
-            serviceMock.Setup(s => s.GetByIdAsync(id))
-                .ReturnsAsync(value: null);
-            serviceMock.Setup(s => s.UpdateAsync(id, book));
+            serviceMock
+                .Setup(s => s.UpdateAsync(id, book))
+                .ReturnsAsync(false);
+
             var controller = new BooksController(serviceMock.Object);
 
             // Act
@@ -232,18 +233,10 @@ namespace Catalog.Tests
         public async Task Delete(string id)
         {
             // Arrange
-            Book book = new()
-            {
-                Id = id,
-                Author = "Ralph Johnson",
-                BookName = "Design Patterns",
-                Category = "Computers",
-                Price = 54.90M
-            };
+            serviceMock
+                .Setup(s => s.DeleteAsync(id))
+                .ReturnsAsync(true);
 
-            serviceMock.Setup(s => s.GetByIdAsync(id))
-                .ReturnsAsync(book);
-            serviceMock.Setup(s => s.DeleteAsync(id));
             var controller = new BooksController(serviceMock.Object);
 
             // Act
@@ -258,9 +251,9 @@ namespace Catalog.Tests
         public async Task DeleteNotFound(string id)
         {
             // Arrange
-            serviceMock.Setup(s => s.GetByIdAsync(id))
-                .ReturnsAsync(value: null);
-            serviceMock.Setup(s => s.DeleteAsync(id));
+            serviceMock
+                .Setup(s => s.DeleteAsync(id))
+                .ReturnsAsync(false);
             var controller = new BooksController(serviceMock.Object);
 
             // Act

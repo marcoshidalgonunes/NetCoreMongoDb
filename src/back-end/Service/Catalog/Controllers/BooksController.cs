@@ -58,14 +58,11 @@ namespace Catalog.Controllers
         [HttpPut("{id:length(24)}")]
         public async Task<IActionResult> Update(string id, Book bookIn)
         {
-            var book = await _bookService.GetByIdAsync(id);
-
-            if (book == null)
+            bool updated = await _bookService.UpdateAsync(id, bookIn);
+            if (!updated)
             {
                 return NotFound();
             }
-
-            await _bookService.UpdateAsync(id, bookIn);
 
             return NoContent();
         }
@@ -73,14 +70,11 @@ namespace Catalog.Controllers
         [HttpDelete("{id:length(24)}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var book = await _bookService.GetByIdAsync(id);
-
-            if (book == null)
+            var deleted = await _bookService.DeleteAsync(id);
+            if (!deleted)
             {
                 return NotFound();
             }
-
-            await _bookService.DeleteAsync(book.Id);
 
             return NoContent();
         }
