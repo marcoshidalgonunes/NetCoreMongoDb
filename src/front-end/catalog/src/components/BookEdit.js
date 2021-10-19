@@ -90,19 +90,6 @@ class BookEdit extends Component {
       }
     }
 
-    async updateBook() {
-      const book = this.getBook();
-      book.id = this.state.id;
-      await ApiBooks.update(book)
-        .then(() => this.setState({ redirect: '/'}))
-        .catch(err => { 
-          console.log(err);
-          const status = err.response.status;
-          const message = status === 404 ? 'Book not found' : err.message;
-          this.setState({ error: message, loading: false });
-      }); 
-    }
-
     createForm() {
       return (
         <div className="container h-100">
@@ -211,22 +198,6 @@ export class BookUpdate extends BookEdit {
 
   onUpdateSubmit = () => {
     this.updateBook();
-  }
-
-  async populateBook() {
-    await ApiBooks.getById(this.state.id)
-      .then(response => this.setState({
-         loading: false,
-         id: response.data.id,
-         bookName: response.data.bookName,
-         author: response.data.author,
-         category: response.data.category,
-        price: response.data.price
-      }))
-      .catch(err => { 
-        console.log(err);
-        this.setState( { loading: false, error: err.message });
-    });
   }
 
   async updateBook() {
