@@ -52,8 +52,8 @@ namespace Catalog.Core
             return items.FirstOrDefault();
         }
 
-        public async Task UpdateAsync(string id, T itemIn) =>
-            await _collection.ReplaceOneAsync(item => item.Id == id, itemIn);
+        public async Task UpdateAsync(T itemIn) =>
+            await _collection.ReplaceOneAsync(item => item.Id == itemIn.Id, itemIn);
 
         public async Task DeleteAsync(string id) =>
             await _collection.DeleteOneAsync(item => item.Id == id);

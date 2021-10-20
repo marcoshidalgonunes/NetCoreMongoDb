@@ -27,7 +27,7 @@ namespace Catalog.Tests
             Book book = new Book
             {
                 Author = "Jeff Atwood",
-                BookName = "Effective Programming: More Than Writing Code",
+                Name = "Effective Programming: More Than Writing Code",
                 Category = "Programming",
                 Price = 61.90M
             };
@@ -111,23 +111,22 @@ namespace Catalog.Tests
             Assert.Null(book);
         }
 
-        [Theory]
-        [InlineData("613260743633c438d5250513")]
-        public async Task Update(string id)
+        [Fact]
+        public async Task Update()
         {
             // Arrange
             Book book = new Book
             {
-                Id = id,
+                Id = "613260743633c438d5250513",
                 Author = "Ralph Johnson",
-                BookName = "Design Patterns",
+                Name = "Design Patterns",
                 Category = "Computers",
                 Price = 54.90M
             };
             var bookRepository = new BookRepository(Settings);
 
             // Act
-            var exception =  await Record.ExceptionAsync(() => bookRepository.UpdateAsync(id, book));
+            var exception =  await Record.ExceptionAsync(() => bookRepository.UpdateAsync(book));
 
             // Assert
             Assert.Null(exception);

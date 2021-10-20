@@ -22,7 +22,7 @@ namespace Catalog.Tests
             {
                 Id = id,
                 Author = "Ralph Johnson",
-                BookName = "Design Patterns",
+                Name = "Design Patterns",
                 Category = "Computers",
                 Price = 54.90M
             };
@@ -33,7 +33,7 @@ namespace Catalog.Tests
                 {
                     Id = id,
                     Author = book.Author,
-                    BookName = book.BookName,
+                    Name = book.Name,
                     Category = book.Category,
                     Price = book.Price
                 });
@@ -57,14 +57,14 @@ namespace Catalog.Tests
                     new Book {
                         Id = "613260743633c438d5250513",
                         Author = "Ralph Johnson",
-                        BookName = "Design Patterns",
+                        Name = "Design Patterns",
                         Category = "Computers",
                         Price = 54.90M
                     },
                     new Book {
                         Id = "613260743633c438d5250514",
                         Author = "Robert C. Martin",
-                        BookName = "Clean Code",
+                        Name = "Clean Code",
                         Category = "Computers",
                         Price = 43.15M
                     }
@@ -90,7 +90,7 @@ namespace Catalog.Tests
                 {
                     Id = id,
                     Author = "Ralph Johnson",
-                    BookName = "Design Patterns",
+                    Name = "Design Patterns",
                     Category = "Computers",
                     Price = 54.90M
                 });
@@ -134,14 +134,14 @@ namespace Catalog.Tests
                     new Book {
                         Id = "613260743633c438d5250513",
                         Author = "Ralph Johnson",
-                        BookName = "Design Patterns",
+                        Name = "Design Patterns",
                         Category = "Computers",
                         Price = 54.90M
                     },
                     new Book {
                         Id = "613260743633c438d5250514",
                         Author = "Robert C. Martin",
-                        BookName = "Clean Code",
+                        Name = "Clean Code",
                         Category = "Computers",
                         Price = 43.15M
                     }
@@ -175,54 +175,52 @@ namespace Catalog.Tests
             Assert.IsType<NotFoundResult>(returnValue.Result);
         }
 
-        [Theory]
-        [InlineData("613260743633c438d5250513")]
-        public async Task Update(string id)
+        [Fact]
+        public async Task Update()
         {
             // Arrange
             Book book = new()
             {
-                Id = id,
+                Id = "613260743633c438d5250513",
                 Author = "Ralph Johnson",
-                BookName = "Design Patterns",
+                Name = "Design Patterns",
                 Category = "Computers",
                 Price = 54.90M
             };
 
             serviceMock
-                .Setup(s => s.UpdateAsync(id, book))
+                .Setup(s => s.UpdateAsync(book))
                 .ReturnsAsync(true);
             var controller = new BooksController(serviceMock.Object);
 
             // Act
-            var result = await controller.Update(id, book);
+            var result = await controller.Update(book);
 
             // Assert
             Assert.IsType<NoContentResult>(result);
         }
 
-        [Theory]
-        [InlineData("313260743633c438d5250513")]
-        public async Task UpdateNotFound(string id)
+        [Fact]
+        public async Task UpdateNotFound()
         {
             // Arrange
             Book book = new()
             {
                 Id = "313260743633c438d5250529",
                 Author = "Ralph Johnson",
-                BookName = "Design Patterns",
+                Name = "Design Patterns",
                 Category = "Computers",
                 Price = 54.90M
             };
 
             serviceMock
-                .Setup(s => s.UpdateAsync(id, book))
+                .Setup(s => s.UpdateAsync(book))
                 .ReturnsAsync(false);
 
             var controller = new BooksController(serviceMock.Object);
 
             // Act
-            var result = await controller.Update(id, book);
+            var result = await controller.Update(book);
 
             // Assert
             Assert.IsType<NotFoundResult>(result);

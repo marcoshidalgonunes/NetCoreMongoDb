@@ -19,7 +19,7 @@ namespace Catalog.Tests
             Book book = new()
             {
                 Author = "Ralph Johnson",
-                BookName = "Design Patterns",
+                Name = "Design Patterns",
                 Category = "Computers",
                 Price = 54.90M
             };
@@ -29,7 +29,7 @@ namespace Catalog.Tests
                 {
                     Id = "613260743633c438d5250513",
                     Author = book.Author,
-                    BookName = book.BookName,
+                    Name = book.Name,
                     Category = book.Category,
                     Price = book.Price
                 });
@@ -39,7 +39,7 @@ namespace Catalog.Tests
             var item = await service.CreateAsync(book);
 
             // Assert
-            Assert.True(item.BookName == book.BookName);
+            Assert.True(item.Name == book.Name);
         }
 
         [Fact]
@@ -52,14 +52,14 @@ namespace Catalog.Tests
                     new Book { 
                         Id = "613260743633c438d5250513",
                         Author = "Ralph Johnson", 
-                        BookName = "Design Patterns", 
+                        Name = "Design Patterns", 
                         Category = "Computers", 
                         Price = 54.90M 
                     },
                     new Book {
                         Id = "613260743633c438d5250514",
                         Author = "Robert C. Martin",
-                        BookName = "Clean Code",
+                        Name = "Clean Code",
                         Category = "Computers",
                         Price = 43.15M
                     }
@@ -85,14 +85,14 @@ namespace Catalog.Tests
                     new Book {
                         Id = "613260743633c438d5250513",
                         Author = "Ralph Johnson",
-                        BookName = "Design Patterns",
+                        Name = "Design Patterns",
                         Category = "Computers",
                         Price = 54.90M
                     },
                     new Book {
                         Id = "613260743633c438d5250514",
                         Author = "Robert C. Martin",
-                        BookName = "Clean Code",
+                        Name = "Clean Code",
                         Category = "Computers",
                         Price = 43.15M
                     }
@@ -135,7 +135,7 @@ namespace Catalog.Tests
                 {
                     Id = id,
                     Author = "Ralph Johnson",
-                    BookName = "Design Patterns",
+                    Name = "Design Patterns",
                     Category = "Computers",
                     Price = 54.90M
                 });
@@ -165,24 +165,23 @@ namespace Catalog.Tests
             Assert.Null(item);
         }
 
-        [Theory]
-        [InlineData("613260743633c438d5250513")]
-        public async Task Update(string id)
+        [Fact]
+        public async Task Update()
         {
             // Arrange
             Book book = new Book
             {
-                Id = id,
+                Id = "613260743633c438d5250513",
                 Author = "Ralph Johnson",
-                BookName = "Design Patterns",
+                Name = "Design Patterns",
                 Category = "Computers",
                 Price = 54.90M
             };
-            repositoryMock.Setup(o => o.UpdateAsync(id, book));
+            repositoryMock.Setup(o => o.UpdateAsync(book));
             var service = new BookService(repositoryMock.Object);
 
             // Act
-            var exception = await Record.ExceptionAsync(() => service.UpdateAsync(id, book));
+            var exception = await Record.ExceptionAsync(() => service.UpdateAsync(book));
 
             // Assert
             Assert.Null(exception);

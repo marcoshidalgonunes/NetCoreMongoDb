@@ -24,7 +24,7 @@ export class Books extends Component {
                   <tr key={book.id}>
                     <td>
                       <Link to={{ pathname: `/updatebook/${book.id}`}}>
-                      {book.bookName}
+                      {book.name}
                       </Link>
                     </td>
                     <td>{book.author}</td>

@@ -48,15 +48,15 @@ namespace Catalog.Services
             return await _repository.ReadByIdAsync(id);
         }
 
-        public async Task<bool> UpdateAsync(string id, T itemIn) 
+        public async Task<bool> UpdateAsync(T itemIn) 
         {
-            var item = await GetByIdAsync(id);
-            if (item == null || item.Id != itemIn.Id)
+            var item = await GetByIdAsync(itemIn.Id);
+            if (item == null)
             {
                 return false;
             }
 
-            await _repository.UpdateAsync(id, itemIn);
+            await _repository.UpdateAsync(itemIn);
             return true;
         }
             

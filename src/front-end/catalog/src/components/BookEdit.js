@@ -10,7 +10,7 @@ class BookEdit extends Component {
       this.state = { 
         loading: true,
         id: id, 
-        bookName: null,
+        name: null,
         author: null,
         category: null,
         price: null, 
@@ -32,7 +32,7 @@ class BookEdit extends Component {
     }
 
     onNameChange = (event) => {
-      this.setState({ bookName: event.target.value });
+      this.setState({ name: event.target.value });
     }
 
     onCancel = () => {
@@ -61,7 +61,7 @@ class BookEdit extends Component {
     getBook() {
       return {
         id: null,
-        bookName: this.state.bookName,
+        name: this.state.name,
         author: this.state.author,
         category: this.state.category,
         price: this.state.price
@@ -75,7 +75,7 @@ class BookEdit extends Component {
           .then(response => this.setState({
             loading: false,
             id: response.data.id,
-            bookName: response.data.bookName,
+            name: response.data.name,
             author: response.data.author,
             category: response.data.category,
             price: response.data.price
@@ -97,13 +97,13 @@ class BookEdit extends Component {
             <div className="col-10 col-md-8 col-lg-6">
               <h1>{this.action} Book</h1>
               <div className="form-group mt-2">
-                <label htmlFor="bookName">Name</label>
+                <label htmlFor="name">Name</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="bookName"
+                  id="name"
                   required
-                  value={this.state.bookName}
+                  value={this.state.name}
                   onChange={this.onNameChange}
                   name="title"
                 />
@@ -243,7 +243,7 @@ export class BookDelete extends BookEdit {
           <div className="col-10 col-md-8 col-lg-6">
             <h1>Delete Book</h1>
             <div className='alert alert-warning'>
-			        Are you sure to delete the book <strong>{this.state.bookName}</strong> from <strong>{this.state.author}</strong>?
+			        Are you sure to delete the book <strong>{this.state.name}</strong> from <strong>{this.state.author}</strong>?
 			      </div>
             <div className="d-flex justify-content-center">
               <button onClick={this.onCancel} className="btn btn-outline-secondary mt-3 mx-1">

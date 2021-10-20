@@ -17,6 +17,6 @@ namespace Catalog.Services
 
         Task<T> GetByIdAsync(string id);
 
-        Task<bool> UpdateAsync(string id, T itemIn);
+        Task<bool> UpdateAsync(T itemIn);
     }
 }

@@ -15,7 +15,7 @@ namespace Catalog.Core
 
         Task<T> ReadByIdAsync(string id);
 
-        Task UpdateAsync(string id, T itemIn);
+        Task UpdateAsync(T itemIn);
 
         Task DeleteAsync(string id);
     }

@@ -22,7 +22,7 @@ class ApiBooks extends Api {
     }
     
     async update(book) {
-        return await this.apiClient.put(`Books/${book.id}`, book);
+        return await this.apiClient.put('Books/', book);
     }
 }
 

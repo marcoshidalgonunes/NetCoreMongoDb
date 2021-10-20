@@ -55,10 +55,10 @@ namespace Catalog.Controllers
             return CreatedAtRoute("GetBook", new { id = book.Id }, book);
         }
 
-        [HttpPut("{id:length(24)}")]
-        public async Task<IActionResult> Update(string id, Book bookIn)
+        [HttpPut]
+        public async Task<IActionResult> Update(Book bookIn)
         {
-            bool updated = await _bookService.UpdateAsync(id, bookIn);
+            bool updated = await _bookService.UpdateAsync(bookIn);
             if (!updated)
             {
                 return NotFound();
