@@ -12,17 +12,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.Domain", "Catalog.Domain\Catalog.Domain.csproj", "{7C475BD5-9A6C-48EB-8B1C-A8685E4E8250}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Domain", "Catalog.Domain\Catalog.Domain.csproj", "{7C475BD5-9A6C-48EB-8B1C-A8685E4E8250}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.Service", "Catalog.Service\Catalog.Service.csproj", "{2896ECC3-4446-4FB9-9750-65AA10AAAC61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Service", "Catalog.Service\Catalog.Service.csproj", "{2896ECC3-4446-4FB9-9750-65AA10AAAC61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.Data", "Catalog.Data\Catalog.Data.csproj", "{31384D25-5F93-4CEF-A440-2D9277DB1EF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Data", "Catalog.Data\Catalog.Data.csproj", "{31384D25-5F93-4CEF-A440-2D9277DB1EF6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Data.Test", "Catalog.Data.Test\Catalog.Data.Test.csproj", "{D8C79D38-77C8-4E98-8C43-707BF01EC24A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.Service.Test", "Catalog.Service.Test\Catalog.Service.Test.csproj", "{4C630341-C6D2-49EC-A865-9E4F2A56B235}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Service.Test", "Catalog.Service.Test\Catalog.Service.Test.csproj", "{4C630341-C6D2-49EC-A865-9E4F2A56B235}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Test", "Catalog.Test\Catalog.Test.csproj", "{D8952922-AE10-4E70-9437-AEEC5B22B8DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{536B5788-BB31-48B2-A613-245D6D103DD5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{007FF50C-1F17-480F-B15F-BFCEFE0927C4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8F6455ED-9EED-4838-9AB2-49ED305204A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +71,15 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{44327135-DBE2-4A91-8286-36682811D2E8} = {536B5788-BB31-48B2-A613-245D6D103DD5}
+		{7C475BD5-9A6C-48EB-8B1C-A8685E4E8250} = {007FF50C-1F17-480F-B15F-BFCEFE0927C4}
+		{2896ECC3-4446-4FB9-9750-65AA10AAAC61} = {007FF50C-1F17-480F-B15F-BFCEFE0927C4}
+		{31384D25-5F93-4CEF-A440-2D9277DB1EF6} = {007FF50C-1F17-480F-B15F-BFCEFE0927C4}
+		{D8C79D38-77C8-4E98-8C43-707BF01EC24A} = {8F6455ED-9EED-4838-9AB2-49ED305204A1}
+		{4C630341-C6D2-49EC-A865-9E4F2A56B235} = {8F6455ED-9EED-4838-9AB2-49ED305204A1}
+		{D8952922-AE10-4E70-9437-AEEC5B22B8DA} = {8F6455ED-9EED-4838-9AB2-49ED305204A1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D48B4670-B1F1-4BC3-B870-26A4CD3C21E2}
