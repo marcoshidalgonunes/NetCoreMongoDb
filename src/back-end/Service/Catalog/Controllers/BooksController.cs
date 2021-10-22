@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Catalog.Models;
-using Catalog.Services;
+using Catalog.Domain.Entity;
+using Catalog.Service.MongoDb;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.Controllers
@@ -10,9 +10,9 @@ namespace Catalog.Controllers
     [ApiController]
     public sealed class BooksController : ControllerBase
     {
-        private readonly IService<Book> _bookService;
+        private readonly IMongoDbService<Book, string> _bookService;
 
-        public BooksController(IService<Book> bookService)
+        public BooksController(IMongoDbService<Book, string> bookService)
         {
             _bookService = bookService;
         }

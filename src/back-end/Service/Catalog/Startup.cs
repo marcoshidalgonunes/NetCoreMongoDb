@@ -1,8 +1,11 @@
 using System;
 using Catalog.Core;
-using Catalog.Core.Middleware;
-using Catalog.Models;
-using Catalog.Services;
+using Catalog.Data;
+using Catalog.Data.MongoDb;
+using Catalog.Domain.Entity;
+using Catalog.Domain.Mapping;
+using Catalog.Service;
+using Catalog.Service.MongoDb;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -43,23 +46,25 @@ namespace Catalog
                 });
             }
 
+            EntityMongoMapper.Map<Book, string>();
+
             // requires using Microsoft.Extensions.Options
             if (bool.TryParse(Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"), out bool isInContainer) && isInContainer)
             {
-                services.Configure<CatalogDatabaseSettings>(
-                    Configuration.GetSection(nameof(CatalogDatabaseSettings) + "Docker"));
+                services.Configure<MongoDbSettings>(
+                    Configuration.GetSection(nameof(MongoDbSettings) + "Docker"));
             }
             else
             {
-                services.Configure<CatalogDatabaseSettings>(
-                    Configuration.GetSection(nameof(CatalogDatabaseSettings)));
+                services.Configure<MongoDbSettings>(
+                    Configuration.GetSection(nameof(MongoDbSettings)));
             }
 
-            services.AddSingleton<ICatalogDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<CatalogDatabaseSettings>>().Value);
+            services.AddSingleton<IMongoDbSettings>(sp =>
+                sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
 
-            services.AddSingleton<IRepository<Book>, BookRepository>();
-            services.AddSingleton<IService<Book>, BookService>();
+            services.AddSingleton<IMongoDbRepository<Book, string>, BookRepository>();
+            services.AddSingleton<IMongoDbService<Book, string>, BookService>();
 
             services.AddControllers();
 

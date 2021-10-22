@@ -1,17 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="BookRepositoryTest.cs" />
-    <Compile Remove="BooksControllerTests.cs" />
-    <Compile Remove="BookServiceTest.cs" />
-    <Compile Remove="Fixture\DependencyInjectionFixture.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
@@ -28,11 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Catalog\Catalog.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Fixture\" />
+    <ProjectReference Include="..\Catalog.Data\Catalog.Data.csproj" />
+    <ProjectReference Include="..\Catalog.Domain\Catalog.Domain.csproj" />
+    <ProjectReference Include="..\Catalog.Service\Catalog.Service.csproj" />
   </ItemGroup>
 
 </Project>

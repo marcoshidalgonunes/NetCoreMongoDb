@@ -5,7 +5,7 @@ using Catalog.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace Catalog.Core.Middleware
+namespace Catalog.Core
 {
     public class ExceptionMiddleware
     {
@@ -26,7 +26,7 @@ namespace Catalog.Core.Middleware
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong: {ex}");
+                _logger.LogError($"An exception ocurred:{Environment.NewLine}{ex}");
                 await HandleExceptionAsync(httpContext, ex);
             }
         }

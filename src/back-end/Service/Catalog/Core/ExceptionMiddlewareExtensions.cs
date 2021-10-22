@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace Catalog.Core.Middleware
+namespace Catalog.Core
 {
     public static class ExceptionMiddlewareExtensions
     {

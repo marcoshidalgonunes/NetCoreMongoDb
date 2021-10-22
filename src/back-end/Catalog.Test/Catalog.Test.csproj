@@ -7,10 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Fixture\**" />
+    <EmbeddedResource Remove="Fixture\**" />
+    <None Remove="Fixture\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="BookRepositoryTest.cs" />
-    <Compile Remove="BooksControllerTests.cs" />
     <Compile Remove="BookServiceTest.cs" />
-    <Compile Remove="Fixture\DependencyInjectionFixture.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,11 +32,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Catalog\Catalog.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Fixture\" />
+    <ProjectReference Include="..\Catalog.Domain\Catalog.Domain.csproj" />
+    <ProjectReference Include="..\Catalog.Service\Catalog.Service.csproj" />
+    <ProjectReference Include="..\Service\Catalog\Catalog.csproj" />
   </ItemGroup>
 
 </Project>

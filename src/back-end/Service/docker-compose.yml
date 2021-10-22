@@ -10,6 +10,8 @@ services:
       - mongodata:/data/db
     ports:
       - 27018:27017
+    networks:
+      - lan-network
 
   catalog:
     image: ${DOCKER_REGISTRY-}catalog
@@ -24,6 +26,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=DockerDevelopment
     ports:
       - "5050:80"
+    networks:
+      - lan-network
 
   ui:
     image: ${DOCKER_REGISTRY-}catalog-ui
@@ -33,11 +37,21 @@ services:
     container_name: catalog_ui
     ports:
       - '3001:3000'
+    depends_on:
+      - catalog
+    links:
+      - catalog
     environment:
       - NODE_ENV=development
     volumes:
       - '../../front-end/catalog/.:/app'
       - '/app/node_modules'
+    networks:
+      - lan-network
 
 volumes:
   mongodata:
+
+networks:
+  lan-network:
+    driver: bridge
