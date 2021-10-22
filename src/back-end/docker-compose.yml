@@ -32,7 +32,7 @@ services:
   ui:
     image: ${DOCKER_REGISTRY-}catalog-ui
     build: 
-      context: ../../front-end/catalog/.
+      context: ../front-end/catalog/.
       dockerfile: Dockerfile
     container_name: catalog_ui
     ports:
@@ -44,7 +44,7 @@ services:
     environment:
       - NODE_ENV=development
     volumes:
-      - '../../front-end/catalog/.:/app'
+      - '../front-end/catalog/.:/app'
       - '/app/node_modules'
     networks:
       - lan-network
