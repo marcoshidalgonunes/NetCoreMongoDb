@@ -32,8 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Catalog.Domain\Catalog.Domain.csproj" />
-    <ProjectReference Include="..\Catalog.Service\Catalog.Service.csproj" />
+    <ProjectReference Include="..\Catalog\Catalog.csproj" />
     <ProjectReference Include="..\Service\Catalog\Catalog.csproj" />
   </ItemGroup>
 
