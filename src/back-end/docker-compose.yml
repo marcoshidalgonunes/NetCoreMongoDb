@@ -4,7 +4,7 @@ services:
 
   mongo:
     container_name: bookstoredb
-    image: bookstoredb
+    image: mongo
     restart: always
     volumes:
       - mongodata:/data/db
@@ -22,8 +22,6 @@ services:
       - mongo
     links:
       - mongo
-    environment:
-      - ASPNETCORE_ENVIRONMENT=DockerDevelopment
     ports:
       - "5050:80"
     networks:
