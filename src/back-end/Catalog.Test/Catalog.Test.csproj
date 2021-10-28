@@ -33,7 +33,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Catalog\Catalog.csproj" />
-    <ProjectReference Include="..\Service\Catalog\Catalog.csproj" />
   </ItemGroup>
 
 </Project>
