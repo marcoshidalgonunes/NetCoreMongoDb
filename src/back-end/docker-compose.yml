@@ -18,6 +18,7 @@ services:
     build:
       context: .
       dockerfile: Catalog/Dockerfile
+    profiles: [ DockerCompose ]
     depends_on:
       - mongo
     links:

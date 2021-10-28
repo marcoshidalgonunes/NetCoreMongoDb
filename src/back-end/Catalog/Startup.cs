@@ -32,7 +32,7 @@ namespace Catalog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            if (_env.IsDevelopment())
+            if (_env.IsDevelopment() || _env.IsEnvironment("DockerCompose"))
             {
                 services.AddCors(options =>
                 {
@@ -49,16 +49,8 @@ namespace Catalog
             EntityMongoMapper.Map<Book, string>();
 
             // requires using Microsoft.Extensions.Options
-            if (bool.TryParse(Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"), out bool isInContainer) && isInContainer)
-            {
-                services.Configure<MongoDbSettings>(
-                    Configuration.GetSection(nameof(MongoDbSettings) + "Docker"));
-            }
-            else
-            {
-                services.Configure<MongoDbSettings>(
-                    Configuration.GetSection(nameof(MongoDbSettings)));
-            }
+            services.Configure<MongoDbSettings>(
+                Configuration.GetSection(nameof(MongoDbSettings)));
 
             services.AddSingleton<IMongoDbSettings>(sp =>
                 sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);

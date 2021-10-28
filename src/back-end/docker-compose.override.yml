@@ -3,6 +3,6 @@ version: '3.4'
 services:
   catalog:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=DockerCompose
     ports:
       - "80"
