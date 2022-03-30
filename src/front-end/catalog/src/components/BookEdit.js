@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import ApiBooks from '../services/apiBooks';
 
 class BookEdit extends Component {
 
     constructor(props) {
       super(props);
-      const id = props.match ? props.match.params.id : null;
+      const id = this.props.id ? this.props.id : null;
       this.state = { 
         loading: true,
         id: id, 
