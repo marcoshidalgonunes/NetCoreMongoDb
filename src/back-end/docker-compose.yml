@@ -33,12 +33,7 @@ services:
       context: ../front-end/catalog/.
       dockerfile: Dockerfile
     ports:
-      - '3001:3000'
-    environment:
-      - NODE_ENV=development
-    volumes:
-      - '../front-end/catalog/.:/app'
-      - '/app/node_modules'
+      - '3001:80'
 
 volumes:
   mongodata:
