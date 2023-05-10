@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace Catalog.Core
+namespace Catalog.Core;
+
+public static class ExceptionMiddlewareExtensions
 {
-    public static class ExceptionMiddlewareExtensions
+    public static void UseExceptionMiddleware(this IApplicationBuilder app)
     {
-        public static void UseExceptionMiddleware(this IApplicationBuilder app)
-        {
-            app.UseMiddleware<ExceptionMiddleware>();
-        }
+        app.UseMiddleware<ExceptionMiddleware>();
     }
 }

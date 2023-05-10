@@ -2,19 +2,18 @@
 using System.Threading.Tasks;
 using Catalog.Domain.Entity;
 
-namespace Catalog.Data
+namespace Catalog.Data;
+
+public interface IRepository<TEntity, TIdentifier>
+    where TEntity : IEntity<TIdentifier>
 {
-    public interface IRepository<TEntity, TIdentifier>
-        where TEntity : IEntity<TIdentifier>
-    {
-        Task<TEntity> CreateAsync(TEntity item);
+    Task<TEntity> CreateAsync(TEntity item);
 
-        Task<List<TEntity>> ReadAllAsync();
+    Task<List<TEntity>> ReadAllAsync();
 
-        Task<TEntity> ReadByIdAsync(TIdentifier id);
+    Task<TEntity> ReadByIdAsync(TIdentifier id);
 
-        Task UpdateAsync(TEntity itemIn);
+    Task UpdateAsync(TEntity itemIn);
 
-        Task DeleteAsync(TIdentifier id);
-    }
+    Task DeleteAsync(TIdentifier id);
 }

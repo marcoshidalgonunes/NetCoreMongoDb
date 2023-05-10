@@ -1,11 +1,10 @@
 ﻿using Catalog.Data.MongoDb;
 using Catalog.Domain.Entity;
 
-namespace Catalog.Data
+namespace Catalog.Data;
+
+public sealed class BookRepository : BaseMongoDbRepository<Book, string>
 {
-    public sealed class BookRepository : BaseMongoDbRepository<Book, string>
-    {
-        public BookRepository(IMongoDbSettings settings)
-            : base(settings) { }
-    }
+    public BookRepository(IMongoDbSettings settings)
+        : base(settings) { }
 }

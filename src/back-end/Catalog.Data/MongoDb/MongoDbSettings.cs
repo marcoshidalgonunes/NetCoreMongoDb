@@ -1,11 +1,10 @@
-﻿namespace Catalog.Data.MongoDb
+﻿namespace Catalog.Data.MongoDb;
+
+public sealed class MongoDbSettings : IMongoDbSettings
 {
-    public sealed class MongoDbSettings : IMongoDbSettings
-    {
-        public string CollectionName { get; set; }
+    public string CollectionName { get; set; }
 
-        public string ConnectionString { get; set; }
+    public string ConnectionString { get; set; }
 
-        public string DatabaseName { get; set; }
-    }
+    public string DatabaseName { get; set; }
 }

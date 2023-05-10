@@ -1,7 +1,6 @@
-﻿namespace Catalog.Domain.Entity
+﻿namespace Catalog.Domain.Entity;
+
+public abstract class Entity<TIdentifier> : IEntity<TIdentifier>
 {
-    public abstract class Entity<TIdentifier> : IEntity<TIdentifier>
-    {
-        public TIdentifier Id { get; set; }
-    }
+    public TIdentifier Id { get; set; }
 }

@@ -2,11 +2,10 @@
 using System.Threading.Tasks;
 using Catalog.Domain.Entity;
 
-namespace Catalog.Data.MongoDb
+namespace Catalog.Data.MongoDb;
+
+public interface IMongoDbRepository<TEntity, TIdentifier> : IRepository<TEntity, TIdentifier>
+    where TEntity : IEntity<TIdentifier>
 {
-    public interface IMongoDbRepository<TEntity, TIdentifier> : IRepository<TEntity, TIdentifier>
-        where TEntity : IEntity<TIdentifier>
-    {
-        Task<List<TEntity>> ReadByCriteriaAsync(string criteria, string search);
-    }
+    Task<List<TEntity>> ReadByCriteriaAsync(string criteria, string search);
 }

@@ -1,78 +1,108 @@
-using System;
 using System.Diagnostics;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
+using Catalog.Core;
+using Catalog.Data;
+using Catalog.Data.MongoDb;
+using Catalog.Domain.Entity;
+using Catalog.Domain.Mapping;
+using Catalog.Service;
+using Catalog.Service.MongoDb;
+using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using Serilog;
 
-namespace Catalog
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
+
+Log.Information("Starting...");
+
+try
 {
-    /// <summary>
-    /// Based on https://jkdev.me/asp-net-core-serilog/
-    /// </summary>
-    public class Program
+    var builder = WebApplication.CreateBuilder(args);
+    var services = builder.Services;
+    var environment = builder.Environment;
+
+    EntityMongoMapper.Map<Book, string>();
+
+    // requires using Microsoft.Extensions.Options
+    services.Configure<MongoDbSettings>(
+        builder.Configuration.GetSection(nameof(MongoDbSettings)));
+
+    services.AddSingleton<IMongoDbSettings>(sp =>
+        sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+
+    services.AddSingleton<IMongoDbRepository<Book, string>, BookRepository>();
+    services.AddSingleton<IMongoDbService<Book, string>, BookService>();
+
+    // Add services to the container.
+    services.AddControllers();
+
+    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    services.AddEndpointsApiExplorer();
+    services.AddSwaggerGen(c =>
     {
-        public static void Main(string[] args)
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "NetCoreWebAPIMongoDB", Version = "v1" });
+    });
+
+    if (environment.IsDevelopment() || environment.IsEnvironment("DockerCompose"))
+    {
+        services.AddCors(options =>
         {
-            try
-            {
-                using IHost host = CreateHostBuilder(args).Build();
-                host.Run();
-            }
-            catch (Exception ex)
-            {
-                // Log.Logger will likely be internal type "Serilog.Core.Pipeline.SilentLogger".
-                if (Log.Logger == null || Log.Logger.GetType().Name == "SilentLogger")
+            options.AddDefaultPolicy(
+                builder =>
                 {
-                    // Loading configuration or Serilog failed.
-                    // This will create a logger that can be captured by Azure logger.
-                    // To enable Azure logger, in Azure Portal:
-                    // 1. Go to WebApp
-                    // 2. App Service logs
-                    // 3. Enable "Application Logging (Filesystem)", "Application Logging (Filesystem)" and "Detailed error messages"
-                    // 4. Set Retention Period (Days) to 10 or similar value
-                    // 5. Save settings
-                    // 6. Under Overview, restart web app
-                    // 7. Go to Log Stream and observe the logs
-                    Log.Logger = new LoggerConfiguration()
-                        .MinimumLevel.Debug()
-                        .WriteTo.Console()
-                        .CreateLogger();
-                }
+                    builder.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback);
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+                });
+        });
+    }
 
-                Log.Fatal(ex, "Host terminated unexpectedly");
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args)
-            => Host.CreateDefaultBuilder(args)
-                   .ConfigureWebHostDefaults(webBuilder =>
-                   {
-                       webBuilder.UseStartup<Startup>()
-                        .CaptureStartupErrors(true)
-                        .ConfigureAppConfiguration(config =>
-                        {
-                            config
-                                // Used for local settings like connection strings.
-                                .AddJsonFile("appsettings.Local.json", optional: true);
-                        })
-                        .UseSerilog((hostingContext, loggerConfiguration) => {
-                            loggerConfiguration
-                                .ReadFrom.Configuration(hostingContext.Configuration)
-                                .Enrich.FromLogContext()
-                                .Enrich.WithProperty("ApplicationName", typeof(Program).Assembly.GetName().Name)
-                                .Enrich.WithProperty("Environment", hostingContext.HostingEnvironment);
+    // Configure Serilog
+    builder.Host.UseSerilog((hostingContext, loggerConfiguration) => {
+        loggerConfiguration
+            .ReadFrom.Configuration(hostingContext.Configuration)
+            .Enrich.FromLogContext()
+            .Enrich.WithProperty("ApplicationName", typeof(Program).Assembly.GetName().Name)
+            .Enrich.WithProperty("Environment", hostingContext.HostingEnvironment);
 
 #if DEBUG
-                            // Used to filter out potentially bad data due debugging.
-                            // Very useful when doing Seq dashboards and want to remove logs under debugging session.
-                            loggerConfiguration.Enrich.WithProperty("DebuggerAttached", Debugger.IsAttached);
+        // Used to filter out potentially bad data due debugging.
+        // Very useful when doing Seq dashboards and want to remove logs under debugging session.
+        loggerConfiguration.Enrich.WithProperty("DebuggerAttached", Debugger.IsAttached);
 #endif
-                        });
-                   });
+    });
+
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseDeveloperExceptionPage();
+        app.UseSwagger();
+        app.UseSwaggerUI();
     }
+
+    app.UseExceptionMiddleware();
+
+    // This will make the HTTP requests log as rich logs instead of plain text.
+    app.UseSerilogRequestLogging();
+
+    app.UseCors();
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Host terminated unexpectedly");
+}
+finally
+{
+    Log.Information("Terminanting");
+    Log.CloseAndFlush();
 }

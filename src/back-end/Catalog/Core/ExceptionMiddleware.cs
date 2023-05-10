@@ -5,42 +5,41 @@ using Catalog.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace Catalog.Core
+namespace Catalog.Core;
+
+public class ExceptionMiddleware
 {
-    public class ExceptionMiddleware
+    private readonly RequestDelegate _next;
+    private readonly ILogger _logger;
+
+    public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
     {
-        private readonly RequestDelegate _next;
-        private readonly ILogger _logger;
+        _logger = logger;
+        _next = next;
+    }
 
-        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+    public async Task InvokeAsync(HttpContext httpContext)
+    {
+        try
         {
-            _logger = logger;
-            _next = next;
+            await _next(httpContext);
         }
-
-        public async Task InvokeAsync(HttpContext httpContext)
+        catch (Exception ex)
         {
-            try
-            {
-                await _next(httpContext);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"An exception ocurred:{Environment.NewLine}{ex}");
-                await HandleExceptionAsync(httpContext, ex);
-            }
+            _logger.LogError($"An exception ocurred:{Environment.NewLine}{ex}");
+            await HandleExceptionAsync(httpContext, ex);
         }
+    }
 
-        private async Task HandleExceptionAsync(HttpContext context, Exception exception)
+    private async Task HandleExceptionAsync(HttpContext context, Exception exception)
+    {
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+        await context.Response.WriteAsync(new ErrorDetails()
         {
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
-            await context.Response.WriteAsync(new ErrorDetails()
-            {
-                StatusCode = context.Response.StatusCode,
-                Message = "Internal Server Error handled by middleware."
-            }.ToString());
-        }
+            StatusCode = context.Response.StatusCode,
+            Message = "Internal Server Error handled by middleware."
+        }.ToString());
     }
 }

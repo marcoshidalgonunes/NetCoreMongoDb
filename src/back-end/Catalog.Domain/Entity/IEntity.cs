@@ -1,7 +1,6 @@
-﻿namespace Catalog.Domain.Entity
+﻿namespace Catalog.Domain.Entity;
+
+public interface IEntity<TIdentifier>
 {
-    public interface IEntity<TIdentifier>
-    {
-        TIdentifier Id { get; set; }
-    }
+    TIdentifier Id { get; set; }
 }

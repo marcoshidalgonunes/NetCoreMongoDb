@@ -1,11 +1,10 @@
-﻿namespace Catalog.Data.MongoDb
+﻿namespace Catalog.Data.MongoDb;
+
+public interface IMongoDbSettings
 {
-    public interface IMongoDbSettings
-    {
-        string CollectionName { get; set; }
+    string CollectionName { get; set; }
 
-        string ConnectionString { get; set; }
+    string ConnectionString { get; set; }
 
-        string DatabaseName { get; set; }
-    }
+    string DatabaseName { get; set; }
 }

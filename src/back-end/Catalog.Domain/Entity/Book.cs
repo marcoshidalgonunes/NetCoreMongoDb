@@ -1,13 +1,12 @@
-﻿namespace Catalog.Domain.Entity
+﻿namespace Catalog.Domain.Entity;
+
+public sealed class Book : Entity<string>
 {
-    public sealed class Book : Entity<string>
-    {
-        public string Name { get; set; }
+    public string Name { get; set; }
 
-        public decimal Price { get; set; }
+    public decimal Price { get; set; }
 
-        public string Category { get; set; }
+    public string Category { get; set; }
 
-        public string Author { get; set; }
-    }
+    public string Author { get; set; }
 }

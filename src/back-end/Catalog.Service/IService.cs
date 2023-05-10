@@ -2,19 +2,18 @@
 using System.Threading.Tasks;
 using Catalog.Domain.Entity;
 
-namespace Catalog.Service
+namespace Catalog.Service;
+
+public interface IService<TEntity, TIdentifier>
+    where TEntity : IEntity<TIdentifier>
 {
-    public interface IService<TEntity, TIdentifier>
-        where TEntity : IEntity<TIdentifier>
-    {
-        Task<TEntity> CreateAsync(TEntity item);
+    Task<TEntity> CreateAsync(TEntity item);
 
-        Task<bool> DeleteAsync(TIdentifier item);
+    Task<bool> DeleteAsync(TIdentifier item);
 
-        Task<List<TEntity>> GetAllAsync();
+    Task<List<TEntity>> GetAllAsync();
 
-        Task<TEntity> GetByIdAsync(TIdentifier id);
+    Task<TEntity> GetByIdAsync(TIdentifier id);
 
-        Task<bool> UpdateAsync(TEntity itemIn);
-    }
+    Task<bool> UpdateAsync(TEntity itemIn);
 }
