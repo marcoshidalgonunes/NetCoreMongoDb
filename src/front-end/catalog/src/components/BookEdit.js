@@ -60,11 +60,11 @@ class BookEdit extends Component {
 
     getBook() {
       return {
-        id: null,
-        name: this.state.name,
-        author: this.state.author,
-        category: this.state.category,
-        price: this.state.price
+        Id: null,
+        Name: this.state.name,
+        Author: this.state.author,
+        Category: this.state.category,
+        Price: this.state.price
       }
     }
 
@@ -74,11 +74,11 @@ class BookEdit extends Component {
         await ApiBooks.getById(id)
           .then(response => this.setState({
             loading: false,
-            id: response.data.id,
-            name: response.data.name,
-            author: response.data.author,
-            category: response.data.category,
-            price: response.data.price
+            id: response.data.Id,
+            name: response.data.Name,
+            author: response.data.Author,
+            category: response.data.Category,
+            price: response.data.Price
           }))
           .catch(err => { 
             console.log(err);

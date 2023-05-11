@@ -21,17 +21,17 @@ export class Books extends Component {
               </thead>
               <tbody>
                 {this.books && this.books.map(book =>
-                  <tr key={book.id}>
+                  <tr key={book.Id}>
                     <td>
-                      <Link to={{ pathname: `/updatebook/${book.id}`}}>
-                      {book.name}
+                      <Link to={{ pathname: `/updatebook/${book.Id}`}}>
+                      {book.Name}
                       </Link>
                     </td>
-                    <td>{book.author}</td>
-                    <td>{book.category}</td>
-                    <td>{book.price}</td>
+                    <td>{book.Author}</td>
+                    <td>{book.Category}</td>
+                    <td>{book.Price}</td>
                     <td>
-                      <Link to={{ pathname: `/deletebook/${book.id}`}}>
+                      <Link to={{ pathname: `/deletebook/${book.Id}`}}>
                         <button
                           className="btn btn-outline-warning py-0"
                           type="button">
