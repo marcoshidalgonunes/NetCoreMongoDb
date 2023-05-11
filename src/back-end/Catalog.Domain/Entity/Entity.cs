@@ -2,5 +2,5 @@
 
 public abstract class Entity<TIdentifier> : IEntity<TIdentifier>
 {
-    public TIdentifier Id { get; set; }
+    public abstract TIdentifier Id { get; set; }
 }

@@ -36,7 +36,8 @@ try
     services.AddSingleton<IMongoDbService<Book, string>, BookService>();
 
     // Add services to the container.
-    services.AddControllers();
+    services.AddControllers()
+        .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     services.AddEndpointsApiExplorer();
