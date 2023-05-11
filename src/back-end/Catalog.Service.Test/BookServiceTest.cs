@@ -20,7 +20,7 @@ public sealed class BookServiceTest
             Author = "Ralph Johnson",
             Name = "Design Patterns",
             Category = "Computers",
-            Price = 54.90M
+            Price = 54.90
         };
         repositoryMock
             .Setup(o => o.CreateAsync(book))
@@ -53,14 +53,14 @@ public sealed class BookServiceTest
                     Author = "Ralph Johnson",
                     Name = "Design Patterns",
                     Category = "Computers",
-                    Price = 54.90M
+                    Price = 54.90
                 },
                 new Book {
                     Id = "613260743633c438d5250514",
                     Author = "Robert C. Martin",
                     Name = "Clean Code",
                     Category = "Computers",
-                    Price = 43.15M
+                    Price = 43.15
                 }
             });
         var service = new BookService(repositoryMock.Object);
@@ -86,14 +86,14 @@ public sealed class BookServiceTest
                     Author = "Ralph Johnson",
                     Name = "Design Patterns",
                     Category = "Computers",
-                    Price = 54.90M
+                    Price = 54.90
                 },
                 new Book {
                     Id = "613260743633c438d5250514",
                     Author = "Robert C. Martin",
                     Name = "Clean Code",
                     Category = "Computers",
-                    Price = 43.15M
+                    Price = 43.15
                 }
             });
         var service = new BookService(repositoryMock.Object);
@@ -136,7 +136,7 @@ public sealed class BookServiceTest
                 Author = "Ralph Johnson",
                 Name = "Design Patterns",
                 Category = "Computers",
-                Price = 54.90M
+                Price = 54.90
             });
         var service = new BookService(repositoryMock.Object);
 
@@ -174,7 +174,7 @@ public sealed class BookServiceTest
             Author = "Ralph Johnson",
             Name = "Design Patterns",
             Category = "Computers",
-            Price = 54.90M
+            Price = 54.90
         };
         repositoryMock.Setup(o => o.UpdateAsync(book));
         var service = new BookService(repositoryMock.Object);

@@ -1,7 +1,7 @@
-using System.Threading.Tasks;
 using Catalog.Data.MongoDb;
 using Catalog.Domain.Entity;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Catalog.Data.Test;
@@ -12,7 +12,7 @@ public sealed class BookRepositoryTest : IClassFixture<Fixture.DependencyInjecti
 
     private IMongoDbSettings Settings
     {
-        get {  return _serviceProvider.GetService<MongoDbSettings>(); }
+        get { return _serviceProvider.GetService<MongoDbSettings>(); }
     }
 
     public BookRepositoryTest(Fixture.DependencyInjectionFixture fixture)
@@ -24,12 +24,12 @@ public sealed class BookRepositoryTest : IClassFixture<Fixture.DependencyInjecti
     public async Task Create()
     {
         // Arrange
-        Book book = new Book
+        Book book = new()
         {
             Author = "Jeff Atwood",
             Name = "Effective Programming: More Than Writing Code",
             Category = "Programming",
-            Price = 61.90M
+            Price = 61.90
         };
         var bookRepository = new BookRepository(Settings);
 
@@ -115,18 +115,18 @@ public sealed class BookRepositoryTest : IClassFixture<Fixture.DependencyInjecti
     public async Task Update()
     {
         // Arrange
-        Book book = new Book
+        Book book = new()
         {
             Id = "613260743633c438d5250513",
             Author = "Ralph Johnson",
             Name = "Design Patterns",
             Category = "Computers",
-            Price = 54.90M
+            Price = 54.90
         };
         var bookRepository = new BookRepository(Settings);
 
         // Act
-        var exception =  await Record.ExceptionAsync(() => bookRepository.UpdateAsync(book));
+        var exception = await Record.ExceptionAsync(() => bookRepository.UpdateAsync(book));
 
         // Assert
         Assert.Null(exception);
