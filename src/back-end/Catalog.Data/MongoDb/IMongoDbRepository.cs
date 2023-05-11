@@ -5,7 +5,7 @@ using Catalog.Domain.Entity;
 namespace Catalog.Data.MongoDb;
 
 public interface IMongoDbRepository<TEntity, TIdentifier> : IRepository<TEntity, TIdentifier>
-    where TEntity : IEntity<TIdentifier>
+    where TEntity : Entity<TIdentifier>
 {
     Task<List<TEntity>> ReadByCriteriaAsync(string criteria, string search);
 }

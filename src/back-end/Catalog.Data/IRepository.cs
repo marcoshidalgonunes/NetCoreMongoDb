@@ -5,7 +5,7 @@ using Catalog.Domain.Entity;
 namespace Catalog.Data;
 
 public interface IRepository<TEntity, TIdentifier>
-    where TEntity : IEntity<TIdentifier>
+    where TEntity : Entity<TIdentifier>
 {
     Task<TEntity> CreateAsync(TEntity item);
 

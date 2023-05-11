@@ -12,6 +12,8 @@ public static class EntityMongoMapper
     public static void Map<TEntity, TIdentifier>()
         where TEntity : Entity<TIdentifier>, new()
     {
+        BsonSerializer.RegisterSerializer(new DoubleSerializer(BsonType.Double));
+
         var mapper = BsonClassMap.RegisterClassMap<Entity<TIdentifier>>(map => {
             map.AutoMap();
             map.MapIdMember(m => m.Id);

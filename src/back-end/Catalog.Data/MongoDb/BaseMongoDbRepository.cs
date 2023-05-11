@@ -9,7 +9,7 @@ using MongoDB.Driver;
 namespace Catalog.Data.MongoDb;
 
 public abstract class BaseMongoDbRepository<TEntity, TIdentifier> : IMongoDbRepository<TEntity, TIdentifier>
-    where TEntity : IEntity<TIdentifier>
+    where TEntity : Entity<TIdentifier>
 {
     private readonly IMongoCollection<TEntity> _collection;
 

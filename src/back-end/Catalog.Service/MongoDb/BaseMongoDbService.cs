@@ -6,7 +6,7 @@ using Catalog.Domain.Entity;
 namespace Catalog.Service.MongoDb;
 
 public abstract class BaseMongoDbService<TEntity, TIdentifier> : IMongoDbService<TEntity, TIdentifier>
-    where TEntity : IEntity<TIdentifier>
+    where TEntity : Entity<TIdentifier>
 {
     private readonly IMongoDbRepository<TEntity, TIdentifier> _repository;
 
