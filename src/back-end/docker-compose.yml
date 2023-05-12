@@ -37,3 +37,5 @@ services:
 
 volumes:
   mongodata:
+    external: true
+    name: mongodata
