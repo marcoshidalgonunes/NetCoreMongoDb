@@ -1,43 +1,46 @@
+/* eslint-disable react/no-direct-mutation-state */
 import React, { Component } from 'react';
-import { Link, Navigate, useParams } from "react-router-dom";
-import ApiBooks from '../services/apiBooks';
+import { Link, Navigate } from "react-router-dom";
+import BookApi from '../../services/BookApi';
+import { EditProps } from '../../types/EditProps';
+import { Book } from '../../types/Book';
 
-class BookEdit extends Component {
+type BookEditState = {
+  loading: boolean;
+  id?: string; 
+  name: string| undefined;
+  author: string| undefined; 
+  category: string| undefined; 
+  price: number| undefined;
+  error: string| null;
+  redirect: string| null;
+}
 
-    constructor(props) {
-      super(props);
-      const id = this.props.id ? this.props.id : null;
-      this.state = { 
-        loading: true,
-        id: id, 
-        name: null,
-        author: null,
-        category: null,
-        price: null, 
-        error: null,
-        redirect: null
-      };
-    }
+abstract class BookEdit extends Component<EditProps> {
+    action: string = '';
+    state!: BookEditState;
 
-    onAuthorChange = (event) => {
+    onAuthorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       this.setState({ author: event.target.value });
     }
 
-    onCategoryChange = (event) => {
+    onCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       this.setState({ category: event.target.value });
     }
 
-    onPriceChange = (event) => {
+    onPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       this.setState({ price: event.target.value });
     }
 
-    onNameChange = (event) => {
+    onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       this.setState({ name: event.target.value });
     }
 
     onCancel = () => {
       this.setState({ redirect: '/'});
     }
+
+    onSubmit = () => {}
   
     componentDidMount() {
       this.populateBook();
@@ -58,9 +61,9 @@ class BookEdit extends Component {
       )
     }
 
-    getBook() {
+    getBook(): Book {
       return {
-        Id: null,
+        Id: undefined,
         Name: this.state.name,
         Author: this.state.author,
         Category: this.state.category,
@@ -71,14 +74,14 @@ class BookEdit extends Component {
     async populateBook() {
       const id = this.state.id;
       if (id) {
-        await ApiBooks.getById(id)
+        await BookApi.getById(id)
           .then(response => this.setState({
             loading: false,
-            id: response.data.Id,
-            name: response.data.Name,
-            author: response.data.Author,
-            category: response.data.Category,
-            price: response.data.Price
+            id: response.Id,
+            name: response.Name,
+            author: response.Author,
+            category: response.Category,
+            price: response.Price
           }))
           .catch(err => { 
             console.log(err);
@@ -160,10 +163,18 @@ class BookEdit extends Component {
 }
 
 export class BookCreate extends BookEdit {
-  static displayName = BookCreate.name;
-
-  constructor(props) {
+  constructor(props: EditProps) {
     super(props);
+    this.state = { 
+      loading: true,
+      id: props.id, 
+      name: undefined,
+      author: undefined,
+      category: undefined,
+      price: undefined, 
+      error: null,
+      redirect: null
+    };    
     this.onSubmit = this.onCreateSubmit;
     this.action = 'New';
   }
@@ -172,13 +183,13 @@ export class BookCreate extends BookEdit {
     this.createBook();
   }
 
-  populateBook() {
+  async populateBook() {
     this.setState({ loading: false });
   }
 
   async createBook() {
     const book = this.getBook();
-    await ApiBooks.create(book)
+    await BookApi.create(book)
       .then(() => this.setState({ redirect: '/'}))
       .catch(err => { 
         console.log(err);
@@ -188,10 +199,18 @@ export class BookCreate extends BookEdit {
 }
 
 export class BookUpdate extends BookEdit {
-  static displayName = BookUpdate.name;
-
-  constructor(props) {
+  constructor(props: EditProps) {
     super(props);
+    this.state = { 
+      loading: true,
+      id: props.id, 
+      name: undefined,
+      author: undefined,
+      category: undefined,
+      price: undefined, 
+      error: null,
+      redirect: null
+    };    
     this.onSubmit = this.onUpdateSubmit;
     this.action = 'Update';
   }
@@ -202,8 +221,8 @@ export class BookUpdate extends BookEdit {
 
   async updateBook() {
     const book = this.getBook();
-    book.id = this.state.id;
-    await ApiBooks.update(book)
+    book.Id = this.state.id;
+    await BookApi.update(book)
       .then(() => this.setState({ redirect: '/'}))
       .catch(err => { 
         console.log(err);
@@ -217,8 +236,18 @@ export class BookUpdate extends BookEdit {
 export class BookDelete extends BookEdit {
   static displayName = BookDelete.name;
 
-  constructor(props) {
+  constructor(props: EditProps) {
     super(props);
+    this.state = { 
+      loading: true,
+      id: props.id, 
+      name: undefined,
+      author: undefined,
+      category: undefined,
+      price: undefined, 
+      error: null,
+      redirect: null
+    };     
     this.action = 'Delete';
   }
 
@@ -227,8 +256,8 @@ export class BookDelete extends BookEdit {
   }
 
   async deleteBook() {
-    const id = this.state.id;
-    await ApiBooks.delete(id)
+    const id = this.state.id || '';
+    await BookApi.delete(id)
       .then(() => this.setState({ redirect: '/'}))
 	    .catch(err => { 
         console.log(err);
