@@ -34,7 +34,7 @@ public sealed class BooksController : ControllerBase
         return book;
     }
 
-    [HttpGet("{criteria},{search}")]
+    [HttpGet("{criteria}/{search}")]
     public async Task<ActionResult<List<Book>>> Get(string criteria, string search)
     {
         var books = await _bookService.GetByCriteriaAsync(criteria, search);
