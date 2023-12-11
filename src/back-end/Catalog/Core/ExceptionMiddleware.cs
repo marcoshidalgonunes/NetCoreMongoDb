@@ -1,9 +1,5 @@
-﻿using System;
-using System.Net;
-using System.Threading.Tasks;
-using Catalog.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
+﻿using System.Net;
+using Catalog.Domain.Models;
 
 namespace Catalog.Core;
 

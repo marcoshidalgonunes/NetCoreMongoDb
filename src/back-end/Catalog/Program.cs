@@ -1,11 +1,11 @@
 using System.Diagnostics;
 using Catalog.Core;
-using Catalog.Data;
-using Catalog.Data.MongoDb;
-using Catalog.Domain.Entity;
 using Catalog.Domain.Mapping;
-using Catalog.Service;
-using Catalog.Service.MongoDb;
+using Catalog.Domain.Models;
+using Catalog.Repositories;
+using Catalog.Repositories.MongoDb;
+using Catalog.Services;
+using Catalog.Services.MongoDb;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;

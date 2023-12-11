@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Catalog.Models;
+namespace Catalog.Domain.Models;
 
 public class ErrorDetails
 {

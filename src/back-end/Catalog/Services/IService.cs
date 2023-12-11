@@ -1,22 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Catalog.Models;
+﻿using Catalog.Domain.Models;
 
-namespace Catalog.Services
+namespace Catalog.Services;
+
+public interface IService<TEntity, TIdentifier>
+    where TEntity : Entity<TIdentifier>
 {
-    public interface IService<T>
-        where T : IEntity
-    {
-        Task<T> CreateAsync(T item);
+    Task<TEntity> CreateAsync(TEntity item);
 
-        Task<bool> DeleteAsync(string item);
+    Task<bool> DeleteAsync(TIdentifier item);
 
-        Task<List<T>> GetAllAsync();
+    Task<List<TEntity>> GetAllAsync();
 
-        Task<List<T>> GetByCriteriaAsync(string criteria, string search);
+    Task<TEntity> GetByIdAsync(TIdentifier id);
 
-        Task<T> GetByIdAsync(string id);
-
-        Task<bool> UpdateAsync(T itemIn);
-    }
+    Task<bool> UpdateAsync(TEntity itemIn);
 }

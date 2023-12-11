@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Catalog.Controllers;
-using Catalog.Domain.Entity;
-using Catalog.Service.MongoDb;
+using Catalog.Domain.Models;
+using Catalog.Services.MongoDb;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
-namespace Catalog.Test;
+namespace Catalog.Test.Controllers;
 
 public sealed class BooksControllerTests
 {
