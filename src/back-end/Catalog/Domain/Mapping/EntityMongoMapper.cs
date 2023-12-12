@@ -9,7 +9,7 @@ namespace Catalog.Domain.Mapping;
 public static class EntityMongoMapper
 {
     public static void Map<TEntity, TIdentifier>()
-        where TEntity : Entity<TIdentifier>, new()
+        where TEntity : Entity<TIdentifier>
     {
         BsonSerializer.RegisterSerializer(new DoubleSerializer(BsonType.Double));
 

@@ -3,8 +3,6 @@ using Catalog.Repositories.MongoDb;
 
 namespace Catalog.Repositories;
 
-public sealed class BookRepository : BaseMongoDbRepository<Book, string>
+public sealed class BookRepository(IMongoDbSettings settings) : BaseMongoDbRepository<Book, string?>(settings)
 {
-    public BookRepository(IMongoDbSettings settings)
-        : base(settings) { }
 }

@@ -6,11 +6,8 @@ using Catalog.Services.MongoDb;
 
 namespace Catalog.Services;
 
-public sealed class BookService : BaseMongoDbService<Book, string>
+public sealed class BookService(IMongoDbRepository<Book, string?> repository) : BaseMongoDbService<Book, string?>(repository)
 {
-    public BookService(IMongoDbRepository<Book, string> repository)
-        : base(repository) { }
-
     protected async override Task<Book> GetValidatedEntity(Book book)
     {
         var validator = new BookValidator();

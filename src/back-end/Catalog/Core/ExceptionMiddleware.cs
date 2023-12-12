@@ -3,16 +3,10 @@ using Catalog.Domain.Models;
 
 namespace Catalog.Core;
 
-public class ExceptionMiddleware
+public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger _logger;
-
-    public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
-    {
-        _logger = logger;
-        _next = next;
-    }
+    private readonly RequestDelegate _next = next;
+    private readonly ILogger _logger = logger;
 
     public async Task InvokeAsync(HttpContext httpContext)
     {
@@ -22,12 +16,12 @@ public class ExceptionMiddleware
         }
         catch (Exception ex)
         {
-            _logger.LogError($"An exception ocurred:{Environment.NewLine}{ex}");
-            await HandleExceptionAsync(httpContext, ex);
+            _logger.LogError("An exception ocurred:{NewLine}{ex}", Environment.NewLine, ex);
+            await HandleExceptionAsync(httpContext);
         }
     }
 
-    private async Task HandleExceptionAsync(HttpContext context, Exception exception)
+    private static async Task HandleExceptionAsync(HttpContext context)
     {
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

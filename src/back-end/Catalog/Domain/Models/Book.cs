@@ -1,14 +1,14 @@
 ﻿namespace Catalog.Domain.Models;
 
-public sealed class Book : Entity<string>
+public sealed class Book : Entity<string?>
 {
-    public override string Id { get; set; }
+    public override string? Id { get; set; }
 
-    public string Name { get; set; }
+    public required string Name { get; set; }
 
-    public double Price { get; set; }
+    public required double Price { get; set; }
 
-    public string Category { get; set; }
+    public required string Category { get; set; }
 
-    public string Author { get; set; }
+    public required string Author { get; set; }
 }

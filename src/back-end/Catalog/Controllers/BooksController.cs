@@ -6,14 +6,9 @@ namespace Catalog.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public sealed class BooksController : ControllerBase
+public sealed class BooksController(IMongoDbService<Book, string?> bookService) : ControllerBase
 {
-    private readonly IMongoDbService<Book, string> _bookService;
-
-    public BooksController(IMongoDbService<Book, string> bookService)
-    {
-        _bookService = bookService;
-    }
+    private readonly IMongoDbService<Book, string?> _bookService = bookService;
 
     [HttpGet]
     public async Task<ActionResult<List<Book>>> Get() =>

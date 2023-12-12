@@ -39,19 +39,19 @@ public abstract class BaseMongoDbRepository<TEntity, TIdentifier> : IMongoDbRepo
 
         var items = await _collection.Find(filter).ToListAsync();
 
-        return items.ToList();
+        return [.. items];
     }
 
     public async Task<TEntity> ReadByIdAsync(TIdentifier id)
     {
-        var items = await _collection.FindAsync(item => item.Id.Equals(id));
+        using var items = await _collection.FindAsync(item => item.Id!.Equals(id));
 
         return items.FirstOrDefault();
     }
 
     public async Task UpdateAsync(TEntity itemIn) =>
-        await _collection.ReplaceOneAsync(item => item.Id.Equals(itemIn.Id), itemIn);
+        await _collection.ReplaceOneAsync(item => item.Id!.Equals(itemIn.Id), itemIn);
 
     public async Task DeleteAsync(TIdentifier id) =>
-        await _collection.DeleteOneAsync(item => item.Id.Equals(id));
+        await _collection.DeleteOneAsync(item => item.Id!.Equals(id));
 }

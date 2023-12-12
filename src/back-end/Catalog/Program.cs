@@ -23,7 +23,7 @@ try
     var services = builder.Services;
     var environment = builder.Environment;
 
-    EntityMongoMapper.Map<Book, string>();
+    EntityMongoMapper.Map<Book, string?>();
 
     // requires using Microsoft.Extensions.Options
     services.Configure<MongoDbSettings>(
@@ -32,8 +32,8 @@ try
     services.AddSingleton<IMongoDbSettings>(sp =>
         sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
 
-    services.AddSingleton<IMongoDbRepository<Book, string>, BookRepository>();
-    services.AddSingleton<IMongoDbService<Book, string>, BookService>();
+    services.AddSingleton<IMongoDbRepository<Book, string?>, BookRepository>();
+    services.AddSingleton<IMongoDbService<Book, string?>, BookService>();
 
     // Add services to the container.
     services.AddControllers()
