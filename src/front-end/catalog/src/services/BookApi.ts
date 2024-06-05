@@ -11,7 +11,7 @@ class BookApi extends Api {
 
     async getByCriteria(criteria: string, search: string): Promise<Book[]> {
         let books: Book[] = [];
-        await this.api.get(`Books/${criteria},${search}`)
+        await this.api.get(`Books/${criteria}/${search}`)
             .then(response => books = response.data);
         return books;
     }

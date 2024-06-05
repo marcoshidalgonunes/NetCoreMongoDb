@@ -1,21 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Catalog.Domain.Entity;
-using Catalog.Service.MongoDb;
+﻿using Catalog.Domain.Models;
+using Catalog.Services.MongoDb;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public sealed class BooksController : ControllerBase
+public sealed class BooksController(IMongoDbService<Book, string?> bookService) : ControllerBase
 {
-    private readonly IMongoDbService<Book, string> _bookService;
-
-    public BooksController(IMongoDbService<Book, string> bookService)
-    {
-        _bookService = bookService;
-    }
+    private readonly IMongoDbService<Book, string?> _bookService = bookService;
 
     [HttpGet]
     public async Task<ActionResult<List<Book>>> Get() =>
@@ -34,7 +27,7 @@ public sealed class BooksController : ControllerBase
         return book;
     }
 
-    [HttpGet("{criteria},{search}")]
+    [HttpGet("{criteria}/{search}")]
     public async Task<ActionResult<List<Book>>> Get(string criteria, string search)
     {
         var books = await _bookService.GetByCriteriaAsync(criteria, search);

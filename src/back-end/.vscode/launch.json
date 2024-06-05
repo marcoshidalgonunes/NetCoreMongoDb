@@ -6,7 +6,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Catalog/bin/Debug/net6.0/Catalog.dll",
+            "program": "${workspaceFolder}/Catalog/bin/Debug/net8.0/Catalog.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Catalog",
             "stopAtEntry": false,
