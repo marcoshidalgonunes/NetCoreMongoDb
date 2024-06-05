@@ -1,9 +1,8 @@
 FROM node:alpine as builder
 WORKDIR /app
 COPY . .
-RUN npm install -g pnpm
-RUN pnpm install
-RUN pnpm build
+RUN npm install
+RUN npm run build
 
 FROM nginx:alpine as prod
 WORKDIR /usr/share/nginx/html
