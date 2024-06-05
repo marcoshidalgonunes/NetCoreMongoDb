@@ -138,7 +138,9 @@ abstract class BookEdit extends Component<EditProps> {
               <div className="form-group mt-2">
                 <label htmlFor="price">Price</label>
                 <input
-                  type="text"
+                  type="number"
+                  min="0.0"
+                  step="0.01"
                   className="form-control"
                   id="price"
                   required
