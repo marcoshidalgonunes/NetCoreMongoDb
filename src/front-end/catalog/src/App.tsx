@@ -1,30 +1,40 @@
-import React, { Component}  from 'react';
-import { Route, Routes, useParams } from "react-router-dom";
-import { BookList } from './components/books/BookList';
+import { Component}  from 'react';
+import { hasAuthParams, withAuth, AuthContextProps } from "react-oidc-context";
+
 import './App.css';
-import { BookCreate, BookDelete, BookUpdate } from './components/books/BookEdit';
 
-const BookUpdateWrapper = () => {
-  const params = useParams();
-  return <BookUpdate id={params.id} />;
-};
-
-const BookDeleteWrapper = () => {
-  const params = useParams();
-  return <BookDelete id={params.id} />;
-};
+import Router from "./components/Router"
 
 class App extends Component {
+  hasTriedSignin: boolean = false;
+
   render() {
+    // const auth = this.props as AuthContextProps;
+    // if (!(hasAuthParams() || auth.isAuthenticated || auth.activeNavigator || auth.isLoading || this.hasTriedSignin)) {
+    //   auth.signinRedirect();
+    // }    
+
+    // if (auth.isLoading) {
+    //   return <div>Loading...</div>;
+    // }
+  
+    // if (auth.error) {
+    //   return ErrorMessage(auth.error.message);
+    // }
+  
+    // if (auth.isAuthenticated) {
+    //   return (
+    //     <Router/> 
+    //   );
+    // }  
+    
+    // return (
+    //   <div className='alert alert-light'>Authenticating...</div>
+    // );
     return (
-      <Routes>
-        <Route path="/" element={ <BookList/> } />
-        <Route path="/createbook" element={ <BookCreate/> } />
-        <Route path="/updatebook/:id" element={ <BookUpdateWrapper/> } />
-        <Route path="/deletebook/:id" element={ <BookDeleteWrapper/> } />
-      </Routes> 
+      <Router/> 
     );
   }
 }
 
-export default App;
+export default withAuth(App);

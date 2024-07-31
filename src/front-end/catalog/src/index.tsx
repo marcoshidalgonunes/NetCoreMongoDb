@@ -1,7 +1,12 @@
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+
+import { AuthProvider } from "react-oidc-context";
+import OidcConfig from "./types/OidcConfig";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
@@ -10,7 +15,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <BrowserRouter>
-    <App />
+    <AuthProvider {...OidcConfig}>
+      <App />
+    </AuthProvider>
   </BrowserRouter>
 );
 
