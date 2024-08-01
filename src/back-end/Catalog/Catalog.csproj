@@ -30,7 +30,8 @@
   <ItemGroup>
     <Compile Include="Domain\Models\Book.cs" />
     <Compile Include="Domain\Models\Entity.cs" />
-    <Compile Include="Domain\Models\ErrorDetails.cs" />
+    <Compile Include="Domain\Models\ErrorResponse.cs" />
+    <Compile Include="Domain\Models\ValidationError.cs" />
   </ItemGroup>
 
   <ItemGroup>

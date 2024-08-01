@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-
-namespace Catalog.Core;
+﻿namespace Catalog.Core;
 
 /// <summary>
 /// Inserts configured context keys in ILogger service scope.
