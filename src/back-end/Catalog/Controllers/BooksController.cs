@@ -11,10 +11,15 @@ public sealed class BooksController(IMongoDbService<Book, string?> bookService) 
     private readonly IMongoDbService<Book, string?> _bookService = bookService;
 
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Book>))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<List<Book>>> Get() =>
         await _bookService.GetAllAsync();
 
     [HttpGet("{id:length(24)}", Name = "GetBook")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Book))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<Book>> Get(string id)
     {
         var book = await _bookService.GetByIdAsync(id);
@@ -28,6 +33,9 @@ public sealed class BooksController(IMongoDbService<Book, string?> bookService) 
     }
 
     [HttpGet("{criteria}/{search}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Book>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<List<Book>>> Get(string criteria, string search)
     {
         var books = await _bookService.GetByCriteriaAsync(criteria, search);
@@ -41,6 +49,10 @@ public sealed class BooksController(IMongoDbService<Book, string?> bookService) 
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Book))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<Book>> Create(Book book)
     {
         await _bookService.CreateAsync(book);
@@ -49,6 +61,11 @@ public sealed class BooksController(IMongoDbService<Book, string?> bookService) 
     }
 
     [HttpPut]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Update(Book bookIn)
     {
         bool updated = await _bookService.UpdateAsync(bookIn);
@@ -61,6 +78,9 @@ public sealed class BooksController(IMongoDbService<Book, string?> bookService) 
     }
 
     [HttpDelete("{id:length(24)}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(string id)
     {
         var deleted = await _bookService.DeleteAsync(id);
