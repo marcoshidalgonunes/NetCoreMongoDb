@@ -21,13 +21,15 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
     var services = builder.Services;
-    var environment = builder.Environment;
+    var configuration = builder.Configuration;
+    var isDevelopment = builder.Environment.IsDevelopment();
+    var isProduction = builder.Environment.IsProduction();
 
     EntityMongoMapper.Map<Book, string?>();
 
     // requires using Microsoft.Extensions.Options
     services.Configure<MongoDbSettings>(
-        builder.Configuration.GetSection(nameof(MongoDbSettings)));
+        configuration.GetSection(nameof(MongoDbSettings)));
 
     services.AddSingleton<IMongoDbSettings>(sp =>
         sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
@@ -39,26 +41,25 @@ try
     services.AddControllers()
         .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    services.AddEndpointsApiExplorer();
-    services.AddSwaggerGen(c =>
+    if (isDevelopment)
     {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "NetCoreWebAPIMongoDB", Version = "v1" });
-    });
-
-    if (environment.IsDevelopment() || environment.IsEnvironment("DockerCompose"))
-    {
-        services.AddCors(options =>
-        {
-            options.AddDefaultPolicy(
-                builder =>
-                {
-                    builder.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback);
-                    builder.AllowAnyHeader();
-                    builder.AllowAnyMethod();
-                });
-        });
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerOAuth2(configuration);
     }
+
+    services.AddOAuth2(configuration);
+
+    services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(
+            builder =>
+            {
+                builder.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback || origin.StartsWith("https://"));
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+            });
+    });
 
     // Configure Serilog
     builder.Host.UseSerilog((hostingContext, loggerConfiguration) => {
@@ -78,7 +79,7 @@ try
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
+    if (isDevelopment)
     {
         app.UseDeveloperExceptionPage();
         app.UseSwagger();
@@ -94,7 +95,7 @@ try
 
     app.UseAuthorization();
 
-    app.MapControllers();
+    app.MapControllers().RequireAuthorization();
 
     app.Run();
 }

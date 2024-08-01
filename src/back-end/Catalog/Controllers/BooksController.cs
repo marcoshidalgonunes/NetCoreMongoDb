@@ -12,12 +12,14 @@ public sealed class BooksController(IMongoDbService<Book, string?> bookService) 
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Book>))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<List<Book>>> Get() =>
         await _bookService.GetAllAsync();
 
     [HttpGet("{id:length(24)}", Name = "GetBook")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Book))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<Book>> Get(string id)
@@ -34,6 +36,7 @@ public sealed class BooksController(IMongoDbService<Book, string?> bookService) 
 
     [HttpGet("{criteria}/{search}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Book>))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<List<Book>>> Get(string criteria, string search)
@@ -51,6 +54,7 @@ public sealed class BooksController(IMongoDbService<Book, string?> bookService) 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Book))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<Book>> Create(Book book)
@@ -63,6 +67,7 @@ public sealed class BooksController(IMongoDbService<Book, string?> bookService) 
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -79,6 +84,7 @@ public sealed class BooksController(IMongoDbService<Book, string?> bookService) 
 
     [HttpDelete("{id:length(24)}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(string id)
