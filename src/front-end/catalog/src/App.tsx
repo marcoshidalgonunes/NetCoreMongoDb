@@ -1,48 +1,45 @@
 import { Component}  from 'react';
 
-import { User, UserManager, WebStorageStateStore } from 'oidc-client-ts'
 import { hasAuthParams, withAuth, AuthContextProps } from "react-oidc-context";
-import AuthService from './services/AuthService';
+import { AuthProps } from './types/AuthProps';
+import AuthUser from './types/AuthUser';
+import Router from "./components/Router"
 
 import './App.css';
 
-import Router from "./components/Router"
+type AuthState = { 
+  hasTriedSignin: boolean;
+}
 
 class App extends Component {
-  hasTriedSignin: boolean = false;
-  authService: AuthService = new AuthService();
+  auth: AuthContextProps = (this.props as AuthProps).auth;
+  state: AuthState = { hasTriedSignin: false };
+
+  componentDidMount() {
+    const user = AuthUser.getUser();
+
+    if (!user) {
+      void this.auth.signinRedirect();
+      return;
+    }
+
+    this.setState({hasTriedSignin: true}, () => { console.log(`Signed: ${this.state.hasTriedSignin}`) });
+  }
 
   render() {
-    const auth = this.props as AuthContextProps;
-    if (!(hasAuthParams() || auth.isAuthenticated || auth.activeNavigator || auth.isLoading || this.hasTriedSignin)) {
-      this.authService.signInRedirect();
-      this.hasTriedSignin = true;
-    }    
-
-    if (auth.isLoading) {
-      return <div>Loading...</div>;
+    if (this.auth.error) {
+      return <div className='alert alert-danger mt-3'>An error happened with Catalog Service: <strong>{this.auth.error.message}</strong></div>
     }
   
-    if (auth.error) {
-      //return ErrorMessage(auth.error.message);
-    }
-  
-    if (auth.isAuthenticated) {
+    if (this.state.hasTriedSignin) {
       return (
         <Router/> 
       );
     }  
-    
-    console.log(`HasAuthParams: ${hasAuthParams()}`)
-    console.log(`Isloading: ${auth.isLoading}`)
-    console.log(`IsAuthenticated: ${auth.isAuthenticated}`)
-    console.log(`HasTriedSignin: ${this.hasTriedSignin}`)
-    console.log(JSON.stringify(this.props))
 
     return (
       <div className='alert alert-light'>Authenticating...</div>
     );
-
   }
 }
 
