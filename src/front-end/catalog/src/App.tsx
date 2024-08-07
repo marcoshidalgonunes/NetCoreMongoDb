@@ -1,8 +1,8 @@
 import { Component}  from 'react';
 
-import { hasAuthParams, withAuth, AuthContextProps } from "react-oidc-context";
+import { withAuth, AuthContextProps } from "react-oidc-context";
 import { AuthProps } from './types/AuthProps';
-import AuthUser from './types/AuthUser';
+import AuthUser from './services/AuthUser';
 import Router from "./components/Router"
 
 import './App.css';
@@ -17,18 +17,18 @@ class App extends Component {
 
   componentDidMount() {
     const user = AuthUser.getUser();
-
+    
     if (!user) {
       void this.auth.signinRedirect();
       return;
     }
 
-    this.setState({hasTriedSignin: true}, () => { console.log(`Signed: ${this.state.hasTriedSignin}`) });
+    this.setState({hasTriedSignin: true}, () => { console.log(`Sign-in: ${this.state.hasTriedSignin}`) });
   }
 
   render() {
     if (this.auth.error) {
-      return <div className='alert alert-danger mt-3'>An error happened with Catalog Service: <strong>{this.auth.error.message}</strong></div>
+      return <div className='alert alert-danger mt-3'>An error happened during Sign-in: <strong>{this.auth.error.message}</strong></div>
     }
   
     if (this.state.hasTriedSignin) {

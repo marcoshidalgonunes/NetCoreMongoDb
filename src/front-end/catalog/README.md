@@ -6,6 +6,12 @@ It uses `react-router` for routing, [Axios](https://axios-http.com/) to interact
 
 Along with procedures below, the project can be run in a [docker container[(https://mherman.org/blog/dockerizing-a-react-app/).
 
+
+## Using OpenID Connect (OIDC) and OAuth2
+
+This application uses [oidc-client-ts](https://github.com/authts/oidc-client-ts) via [react-oidc-context](https://github.com/authts/react-oidc-context) to implement OpenID Connect. It makes clear how to use these libraries in a React component app written using TypeScript.
+
+
 ## Available Scripts
 
 In the project directory, you can run:

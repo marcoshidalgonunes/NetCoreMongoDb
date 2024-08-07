@@ -1,5 +1,5 @@
 import axios, {AxiosInstance } from "axios"
-import AuthUser from "../types/AuthUser";
+import AuthUser from "./AuthUser";
 
 class Api {
     api: AxiosInstance;
