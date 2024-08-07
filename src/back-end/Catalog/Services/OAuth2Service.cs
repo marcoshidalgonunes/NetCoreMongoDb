@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using System.Text.Json;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace Catalog.Services;
@@ -6,6 +7,7 @@ namespace Catalog.Services;
 public static class OAuth2Service
 {
     private const string SECURITY_SCHEMA = "OAuth2";
+    
 
     public static IServiceCollection AddOAuth2(this IServiceCollection services,
                                                IConfiguration configuration)
@@ -15,10 +17,10 @@ public static class OAuth2Service
             .AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = !$"{configuration["Keycloak:ssl-required"]}".Equals("None", StringComparison.InvariantCultureIgnoreCase);
-                options.MetadataAddress = $"{configuration["Keycloak:auth-server-url"]}/realms/{configuration["Keycloak:realm"]}/.well-known/openid-configuration";
+                options.MetadataAddress = $"http://keycloak:8080/realms/{configuration["Keycloak:realm"]}/.well-known/openid-configuration";
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidIssuer = configuration["Keycloak:auth-server-url"],
+                    ValidIssuer = $"{configuration["Keycloak:auth-server-url"]}/realms/{configuration["Keycloak:realm"]}",
                     ValidAudiences = [$"{configuration["Keycloak:resource"]}", "account"]
                 };
             });
@@ -64,5 +66,17 @@ public static class OAuth2Service
         });
 
         return services;
+    }
+
+    private static string? GetIssuer(string metadataAddress)
+    {
+        using var client = new HttpClient();
+
+        var response = client.GetAsync(metadataAddress).Result;
+        response.EnsureSuccessStatusCode();
+
+        var json = response.Content.ReadAsStringAsync().Result;
+        var metadata = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
+        return metadata?["issuer"]?.ToString();
     }
 }
