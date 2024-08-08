@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 It uses `react-router` for routing, [Axios](https://axios-http.com/) to interact with API and [Bootstrap](https://getbootstrap.com/) for styling.
 
-Along with procedures below, the project can be run in a [docker container[(https://mherman.org/blog/dockerizing-a-react-app/).
+Along with procedures below, the project can be run in a [docker container](https://mherman.org/blog/dockerizing-a-react-app/).
 
 
 ## Using OpenID Connect (OIDC) and OAuth2
