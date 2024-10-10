@@ -28,7 +28,7 @@
     "react-oidc-context": "^3.2.0",
     "react-router-dom": "^6.26.2",
     "react-select": "^5.7.3",
-    "reactstrap": "^9.2.0",
+    "reactstrap": "^9.2.3",
     "typescript": "^5.4.5",
     "web-vitals": "^4.2.3"
   },
