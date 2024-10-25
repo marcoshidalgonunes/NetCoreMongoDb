@@ -14,7 +14,6 @@
     ]
   },
   "dependencies": {
-    "@testing-library/dom": "^10.4.0",
     "@types/axios": "^0.14.0",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
@@ -29,12 +28,14 @@
     "react-oidc-context": "^3.2.0",
     "react-router-dom": "^6.27.0",
     "react-select": "^5.8.1",
+    "react-ts-app": "file:",
     "reactstrap": "^9.2.3",
     "typescript": "^5.4.5",
     "web-vitals": "^4.2.4"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.2",
     "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
