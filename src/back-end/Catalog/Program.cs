@@ -41,6 +41,9 @@ try
     services.AddControllers()
         .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
+    // Add health check
+    services.AddHealthChecks();
+
     if (isDevelopment)
     {
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -96,6 +99,7 @@ try
     app.UseAuthorization();
 
     app.MapControllers().RequireAuthorization();
+    app.MapHealthChecks("/health");
 
     app.Run();
 }

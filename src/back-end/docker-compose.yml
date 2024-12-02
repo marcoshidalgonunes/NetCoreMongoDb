@@ -59,6 +59,11 @@ services:
       - lan-network
     ports:
       - 5005:8080
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
 
   ui:
     container_name: catalog_ui
@@ -67,7 +72,7 @@ services:
       context: ../front-end/catalog/.
       dockerfile: Dockerfile
     depends_on:
-      keycloak:
+      catalog:
         condition: service_healthy
     ports:
       - 3000:80
