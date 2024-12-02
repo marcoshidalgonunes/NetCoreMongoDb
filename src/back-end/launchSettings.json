@@ -2,15 +2,16 @@
   "profiles": {
     "Docker Compose": {
       "commandName": "DockerCompose",
-      "composeLaunchServiceName": "catalog",
-      "composeProfile": {
-        "includes": [
-          "DockerCompose"
-        ]
-      },
-      "composeLaunchAction": "LaunchBrowser",
       "commandVersion": "1.0",
-      "composeLaunchUrl": "http://localhost:3001"
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "catalog",
+      "composeLaunchUrl": "http://localhost:3000",
+      "serviceActions": {
+        "catalog": "StartDebugging",
+        "keycloak": "StartWithoutDebugging",
+        "mongo": "StartWithoutDebugging",
+        "ui": "StartWithoutDebugging"
+      }
     }
   }
 }
