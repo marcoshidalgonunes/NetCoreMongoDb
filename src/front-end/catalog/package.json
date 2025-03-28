@@ -25,7 +25,7 @@
     "oidc-client-ts": "^3.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-oidc-context": "^3.2.0",
+    "react-oidc-context": "^3.3.0",
     "react-router-dom": "^7.4.0",
     "react-select": "^5.10.1",
     "react-ts-app": "file:",
