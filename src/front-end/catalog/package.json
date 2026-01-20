@@ -22,7 +22,7 @@
     "@types/reactstrap": "^8.7.2",
     "axios": "^1.13.2",
     "bootstrap": "^5.3.8",
-    "oidc-client-ts": "^3.3.0",
+    "oidc-client-ts": "^3.4.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-oidc-context": "^3.2.0",
