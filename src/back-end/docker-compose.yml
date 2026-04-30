@@ -9,7 +9,7 @@ services:
     networks:
       - lan-network
     ports:
-      - 27018:27017
+      - 27017:27017
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh mongo:27017/test --quiet
       interval: 10s
