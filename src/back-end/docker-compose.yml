@@ -74,6 +74,8 @@ services:
     depends_on:
       catalog:
         condition: service_healthy
+    networks:
+      - lan-network             
     ports:
       - 3000:80
 
